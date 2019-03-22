@@ -1,0 +1,5 @@
+PKG_PREBUILD()
+{
+cp ${PKG_PATCHDIR}/bashrc ${PKG_BUILDDIR}/dot.bashrc
+}
+

@@ -1,0 +1,158 @@
+#!/bin/bash
+
+# the main wizard script for building Mesk Linux ISOs
+# By Abdallah Aly 2010
+
+
+#####################
+# Global Variables  #
+#####################
+
+ARCH=$(uname -m)
+currdir=$(pwd)
+continue=false
+#DIALOG=${DIALOG=dialog}
+DIALOG="dialog"
+pkgsdir=""
+pkgsgrps=()
+pkglist=()
+pkgrepolist=()
+larch_home="data/larch"
+archiso_live_home="data/archiso-live"
+meskprofile=""
+profilesdir="profiles"
+toolkit=""
+BACKTITLE="Mesk Linux Release Builder"
+#pkglistdisplay=""
+#grpslist=("Admin" "Appearance" "Cameras" "Developer" "Games" "Graphics" "Internet" "Islamic" "Laptops" "Libs" "Live" "Mesk" "Mobile" "Printers" "Scanners" "Secutiry" "Servers" "System" "Terminal" "Tools" "Wireless")
+grpslist=()
+grpslistdesc=()
+pkgrepo=""
+reqpkgslist=( "sed" "wget" "libisoburn" "xorriso" "unionfs" "mksquashfs" "squashfs-tools" "mtools")
+missedpkgs=()
+patcheslist=()
+profile_name=""
+profile_desc="some description"
+workdir="${currdir}/tmpwork"
+license=""
+cd_label=""
+iso_name=""
+author="AbdAllah Aly"
+pkgscache="${currdir}/data/tmp/cache/i686"
+profile_arch="i686"
+pacmantmpconf="${currdir}/data/tmp/pacman.conf.tmp"
+
+####################################
+# Global Custom Profile Variables  #
+####################################
+
+# archiso-live build file variables
+
+
+WORKDIR=".working-${ARCH}"
+DATE=$(date +%F)
+CDNAME="Mesk Linux ISO"
+ISONAME="$CDNAME-${DATE}-${ARCH}.iso"
+OVERLAYDIR=""
+PROFILE_NAME="Custom"
+ROOT_MOD=""
+MOVE_MODULES="ap.010.xlibs ap.011.xapps"
+MODULES="a.000.kernel a.001.core a.002.xorg a.003.xfce a.004.firefox a.005.libs a.006.apps a.007.devel a.008.java a.009.games ${MOVE_MODULES}"
+DELDIR=""
+KERNEL="/etc/mkinitcpio.d/kernel26.kver"
+VMLINUZ="boot/vmlinuz26"
+CDLABEL=""
+PUBLISHER="http://mesklinux.org"
+AUTHOR="Abdallah Aly"
+NOLZMA="no"
+
+PATCHESDIR=""
+
+#############
+# Includes  #
+#############
+
+## heh , C++ style :P
+. funcs/common
+. funcs/basic_info
+. funcs/adv_info
+. funcs/profiler
+. funcs/select_packages
+. funcs/build
+. funcs/make_pkg
+. funcs/archiso_live
+. funcs/select_tk
+. funcs/update_tks
+. funcs/reqpkgs
+. funcs/overlay
+. funcs/save_profile
+. funcs/logfuncs
+. funcs/make_repo
+. funcs/update_repo
+. funcs/buildiso
+. funcs/testiso
+. funcs/burntoflash
+#. funcs/make_pkggroups
+
+
+##############
+# Main Menu  #
+##############
+
+#if [[ $(whoami) != "root" ]] ; then
+#echo -e "You Must be ROOT !!!"
+#exit 1
+#fi
+
+reqpkgslist=("asp" "sed" "awk" "grep" "syslinux" "mksyslinux" "mtools" "squashfs-tools" "arch-install-scripts")
+reqpkgs
+if [ $? = 1 ]
+then
+	exit 1
+fi
+
+
+while true
+do
+
+$DIALOG --clear --backtitle "Mesk Linux release builder" --title "Steps for building release" --menu "pick your step: " 20 70 30 \
+"Update Mesk repo" "Update mesklinux repos" \
+"Profile" "Choose a profile" \
+"Build the release" "lets get this done :D" \
+"Make the release iso" "lets get this done :D" \
+"Test the release iso" "lets test" \
+"Write ISO to flash" "burn the iso to a flash stick" 2> /tmp/menuchoice.$$
+
+#"ToolKit" "Select the toolkit you want" \
+#"Update" "Update toolkits archiso-live and larch" \
+
+case $? in
+1)
+   exit 1;;
+255)
+   exit 255;;
+esac
+
+case $(cat /tmp/menuchoice.$$) in
+
+"ToolKit")
+   select_tk;;
+"Update")
+   update_tks;;
+"Update Mesk repo")
+   update_repo;;
+"Profile")
+   profiler;;
+"Build the release")
+	build;;
+"Make the release iso")
+	buildiso;;
+"Test the release iso")
+	testiso;;
+"Write ISO to flash")
+	burntoflash;;
+esac
+
+done
+
+clear

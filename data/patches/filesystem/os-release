@@ -1,0 +1,8 @@
+NAME="Mesk Linux"
+ID=mesk
+PRETTY_NAME="Mesk Linux"
+ANSI_COLOR="0;36"
+HOME_URL="https://www.mesklinux.org/"
+SUPPORT_URL="https://forums.archlinux.org/"
+BUG_REPORT_URL="https://bugs.mesklinux.org/"
+

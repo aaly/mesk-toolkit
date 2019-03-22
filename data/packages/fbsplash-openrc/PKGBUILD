@@ -1,0 +1,23 @@
+pkgname=fbsplash-openrc
+pkgver=1.0.17
+pkgrel=1
+pkgdesc="fbsplash gentoo plugin"
+arch=('i686' 'x86_64')
+url="http://fbsplash.alanhaggai.org"
+license=('GPL')
+depends=('miscsplashutils' 'freetype2' 'libjpeg' 'libpng' 'libmng' 'lcms' 'gpm') 
+options=('!makeflags')
+source=(http://fbsplash.alanhaggai.org/tarballs/files/splashutils-gentoo-${pkgver}.tar.bz2)
+md5sums=('dc8b49e9f62d1af5ccabb06c6d0376c8')
+
+build() {
+  cd "$srcdir/splashutils-gentoo-${pkgver}"
+  export LIBS="-lbz2"
+  make
+}
+
+package() {
+  cd "$srcdir/splashutils-gentoo-${pkgver}"
+
+  make DESTDIR="$pkgdir" install
+}

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+. /etc/rc.d/functions
+
+egrep_o()
+{
+   cat | egrep "$1" | sed -r "s/.*($1).*/\\1/"
+}
+
+
+cmdline_value()
+{
+   CMDLINE=/proc/cmdline
+   if [ "$2" != "" ]; then CMDLINE="$2"; fi
+   cat "$CMDLINE" 2> /dev/nill | egrep_o "(^|[[:space:]]+)$1=([^[:space:]]+)" | egrep_o "=.*" | cut -b 2- | tail -n 1
+}
+
+
+AUTOCMD=$(cmdline_value "autoexec" | tr "~" " ")
+if [ "$AUTOCMD" != "" ]; then
+#   echo "starting autoexec command: su --login -c \"$AUTOCMD\""
+   su --login -c "$AUTOCMD"
+fi
+
+cmdline_param ()
+{
+
+for param in ${CMDLINE}; do
+        case "${param}" in
+                $1=*) echo "${param##*=}"; return ;;
+
+        esac
+done
+[ -n "${2}" ] && echo "${2}"
+
+}
+
+

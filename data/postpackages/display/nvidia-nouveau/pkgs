@@ -1,0 +1,5 @@
+libgl
+nouveau-dri
+xf86-video-nouveau
+libdrm
+

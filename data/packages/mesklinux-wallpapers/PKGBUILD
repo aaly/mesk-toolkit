@@ -1,0 +1,24 @@
+# Maintainer: Abdallah Aly <aaly@mesklinux.org>
+pkgname=mesklinux-wallpapers
+pkgver=1
+pkgrel=1
+pkgdesc="Mesklinux wallpapers collections"
+arch=(i686 x86_64)
+url="http://www.mesklinux.org/"
+license=(GPL)
+depends=()
+source=(mesk-default.jpg
+        mesk2.jpg
+        mesk3.jpg)
+
+    
+md5sums=('421e2801f65907543ae76da539efb83d'
+         '7e2fd9ef86851e843f31434bd89ae2f9'
+         '8a831fe264d2fa724fa297605f075a39')
+
+build() {
+  cd ${startdir}/src
+  install -m755 -d ${startdir}/pkg/usr/share/wallpapers/mesk/
+
+  install -m644 *.jpg ${startdir}/pkg/usr/share/wallpapers/mesk/
+}

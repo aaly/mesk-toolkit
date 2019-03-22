@@ -1,0 +1,33 @@
+# update mesk repos
+# By Abdallah Aly 2010, 2011, 2012
+
+
+update_repo()
+{
+
+TITLE="Updating Mesk repo"
+
+$DIALOG --backtitle "Mesk Linux Release Builder" --title "$TITLE" --menu "Select a toolkit to use:" 20 70 20 \
+"i686" "update repo for i686 architecture" \
+"x86_64" "update repo for 64 bit architecture architecture" 2> /tmp/menuchoice.$$
+
+case $? in
+1)
+   return 1;;
+255)
+   return 255;;
+esac
+
+
+case $(cat /tmp/menuchoice.$$) in
+"i686")
+make_repo i686;;
+
+"x86_64")
+make_repo x86_64;;
+esac
+
+rm /tmp/menuchoice.$$
+
+}
+

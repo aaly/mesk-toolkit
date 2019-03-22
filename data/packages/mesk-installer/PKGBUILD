@@ -1,0 +1,61 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: Your Name <youremail@domain.com>
+pkgname=mesk-installer
+pkgver=1
+pkgrel=1
+pkgdesc="Mesklinux installer"
+arch=('i686' 'x86_64')
+url="http://www.mesklinux.org"
+license=('BSD2')
+groups=(mesk-live)
+depends=(qt5-base MPF xorg-xinit grub os-prober ntfs-3g)
+makedepends=(MPF)
+checkdepends=()
+optdepends=()
+options=(!strip)
+provides=()
+conflicts=()
+replaces=()
+#source=($pkgname-$pkgver.tar.bz)
+#md5sums=('10617ddc56ea65a255ca61aa65f46799')
+noextract=()
+build() {
+	#  cd "$srcdir/$pkgname-$pkgver"
+	cp -r /run/media/dude/ddd7d4d3-6507-480a-a9de-003873efb28a/dude/mesk-installer/ "$srcdir/installer"
+	cd "$srcdir/installer"
+	#  ./configure --prefix=/usr
+	#   qmake-qt4 CONFIG+=debug
+	qmake CONFIG+=debug
+	#qmake
+  	make
+##gencmake
+##mkdir "${srcdir}"/build
+##cd  "${srcdir}"/build
+##cmake  "${srcdir}"/installer
+#make
+}
+
+#check() {
+#  cd "$srcdir/$pkgname-$pkgver"
+#  make -k check
+#}
+
+package() {
+  cd "$srcdir/installer"
+##   cd "$srcdir/installer"
+##   install -Dm755  "$srcdir"/installer/installer $pkgdir/bin/mesk-installer
+   #cp  "$srcdir"/installer/installer/installer $pkgdir/bin/mesk-installer
+#  make INSTALL_ROOT="$pkgdir" install
+mkdir -p  $pkgdir/usr/local/mesk-installer
+cp  -r "$srcdir"/installer/debug/* $pkgdir/usr/local/mesk-installer/
+#make install
+mkdir -p $pkgdir/usr/bin/
+echo "/usr/local/mesk-installer/mesk-installer -style plastique" > $pkgdir/usr/bin/mesk-installer
+chmod +x  $pkgdir/usr/bin/mesk-installer
+}
+
+# vim:set ts=2 sw=2 et:

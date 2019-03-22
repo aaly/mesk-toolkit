@@ -1,0 +1,516 @@
+#!/bin/bash
+# Build Packages from AUR function for Mesk Linux ISO building bash scripts
+# By Abdallah Aly 2010, 2011, 2012
+
+pkgloginfo()
+{
+# $1 message to log
+# $2 log file
+echo "XXX"
+loginfo ${1} ${2}
+echo "XXX"
+}
+
+pkglogwarning()
+{
+# $1 message to log
+# $2 log file
+echo "XXX"
+logwarning ${1} ${2}
+echo "XXX"
+}
+
+pkglogerror()
+{
+# $1 message to log
+# $2 log file
+echo "XXX"
+logerror ${1} ${2}
+echo "XXX"
+}
+
+#declare -A pkgCritic
+#declare -A pkgDeps
+#declare -A pkgDesc
+#declare -A pkgSize
+declare -A pkgGrp
+declare -A PKGMODULES
+declare -a criticDeps
+PKGSINFO=0
+
+criticGroups="$(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/  -Sg base base-devel| awk '{print $2}' )"
+
+#declare -A pkgInit
+#declare -A pkgFiles
+
+generate_packages_info_array()
+{
+	loginfo "generate_packages_info_array"
+	for grp in $(ls ${currdir}/data/pkggroups/ | sed s/^.*\\/\//)
+	do
+		#loginfo "generate_packages_info_array group : $grp"
+		for grppkg in $(cat ${currdir}/data/pkggroups/${grp})
+		do
+			if ! echo ${grppkg} | grep '#' 2>&1>/dev/null  && [[ "${grppkg}x" != "x" ]]
+			then
+				#loginfo "generate_packages_info_array group : $grppkg"
+				grppkg=${grppkg%>*}
+				grppkg=${grppkg%<*}
+				grppkg=${grppkg%=*}
+				# it is a group
+				if pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Sg ${grppkg} | grep ${grppkg} 2>&1>/dev/null 
+				then
+					#for grppkg2 in $(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Sg ${pkg} | awk '{print $2}')
+					#do
+					#	loginfo "adding $grppkg2 to $grp"
+					#	pkgGrp[$grp]="${pkgGrp[$grp]} $grppkg2"
+					#done
+					pkgGrp[$grp]="${pkgGrp[$grp]} $(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Sg ${grppkg} | awk '{print $2}')"
+				else
+					pkgGrp[$grp]="${pkgGrp[$grp]} $grppkg"
+				fi
+			fi
+		done
+	done
+}
+
+generate_package_info_file()
+{
+	loginfo "generating info for ${1}"
+	
+	local grp=""
+	local pkg="${1}"
+	
+	for pkggrp in ${!pkgGrp[@]}
+	do
+		#for grppkg in $( echo ${pkgGrp[$pkggrp]} )
+		for grppkg in ${pkgGrp[$pkggrp]}
+		do
+			if [[ "${grppkg}" == "${1}" ]]
+			then
+				grp="${pkggrp}"
+				break 2
+			#elif pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Sg ${grppkg} | grep ${grppkg}
+			#then
+				#for grppkg2 in $(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Sg ${pkg} | awk '{prtint $2}')
+				#do
+					#if [[ "${grppkg2}" == "${1}" ]]
+					#then
+						#grp="${pkggrp}"
+						#break 3
+					#fi
+				#done
+			fi
+		done
+	done
+	
+	if [[ -z $grp ]]
+	then
+		grp="other"
+	fi
+	
+	if [[ ! -d ${workdir}/.system/install/packages/${grp} ]]
+	then
+	 mkdir -p ${workdir}/.system/install/packages/${grp}
+	fi
+	
+	PKGMODULES["$grp"]="${PKGMODULES[$grp]} $1"
+		
+	#pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Si ${pkg} | sed -n '/Repo.*/,/Des.*/p' | grep Installed | awk '{print $4" "$5}' > ${workdir}/.system/install/packages/${grp}/${pkg}2 #size	
+	
+	local pacOutput="$(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Si ${1})"
+
+	
+	#pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Si ${pkg} | grep Installed | awk '{print $4" "$5}' > ${workdir}/.system/install/packages/${grp}/${pkg}2 #size	
+	echo "$pacOutput" | grep Installed | awk '{print $4" "$5}' > ${workdir}/.system/install/packages/${grp}/${pkg}2 #size	
+	
+	critic=0
+	if [[ ${grp} == "live" ]]
+	then
+		critic=2 #critical delete yes
+	elif [[ ${grp} == "kernel" ]] || [[ ${grp} == "system" ]] || [[ ${grp} == "libs" ]] || echo "${criticDeps[@]}" | grep "${pkg}" 2>&1>/dev/null || echo ${criticGroups} | grep " ${pkg}" 2>&1>/dev/null
+	then
+		critic=1 #critical yes
+	else
+		critic=0 #critical no
+	fi
+	
+	loginfo "selected group is ${grp} , critical : $critic"
+	
+	echo $critic >> ${workdir}/.system/install/packages/${grp}/${pkg}2
+	
+	#local criticDeps1=""
+	
+	#echo "${pacOutput}" | grep "Depends On" | sed 's/[[:blank:]]\+/ /g' | sed -n 's/.*:\(.*\)/\1/p' | sed 's/None//'
+	
+	if [[ $critic == 1 ]]
+	then
+		#criticDeps1="$(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Si ${1} | grep "Depends On" | sed 's/[[:blank:]]\+/ /g' | sed -n 's/.*:\(.*\)/\1/p' | sed 's/None//')"
+		#criticDeps1="${criticDeps1[@]} $(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Si ${1} | sed -n '/Optional/,/^$/p' | sed '/Required.*/,$d' |  sed '/Conflicts.*/,$d' | sed 's/ \[installed\]//g' | sed 's/Optional Deps   ://' | sed 's/:.*//' | sed 's/[[:blank:]]\+/ /g' | sed ':a;N;$!ba;s/\n/ /g' | sed  's/None//')"
+		criticDeps1="$(echo "${pacOutput}" | grep "Depends On" | sed 's/[[:blank:]]\+/ /g' | sed -n 's/.*:\(.*\)/\1/p' | sed 's/None//')"
+		criticDeps1="${criticDeps1[@]} $(echo "${pacOutput}" | sed -n '/Optional/,/^$/p' | sed '/Required.*/,$d' |  sed '/Conflicts.*/,$d' | sed 's/ \[installed\]//g' | sed 's/Optional Deps   ://' | sed 's/:.*//' | sed 's/[[:blank:]]\+/ /g' | sed ':a;N;$!ba;s/\n/ /g' | sed  's/None//')"
+	fi
+	
+	
+	criticDeps1="$(echo ${criticDeps1}  |  sed 's/[>|<]=\?[0-9]*[0-9]*[\.|-]\?[0-9]*[0-9]*[\.|-]\?[0-9]*[0-9]*[\.|-]\?[0-9]*[0-9]*//g')"
+	criticDeps1="$(echo $criticDeps1 |  sed 's/[[:blank:]]\+/ /g')"
+	
+	for criticalpkg in ${criticDeps1[@]}
+	do
+		if pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Qi ${criticalpkg} &> /dev/zero
+		then
+			criticDeps="$(echo ${criticDeps[@]}) $criticalpkg"
+		fi
+	done
+	
+	#echo "${criticDeps}"
+		
+	#pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/  -Si ${pkg}  | sed -n "/^Description.*/,/$/p" | sed -n 's/^Description.*: //p' >> ${workdir}/.system/install/packages/${grp}/${pkg}2
+	echo "$pacOutput" | sed -n "/^Description.*/,/$/p" | sed -n 's/^Description.*: //p' >> ${workdir}/.system/install/packages/${grp}/${pkg}2
+	cat ${workdir}/.system/install/packages/${grp}/${pkg}2 | awk '{ if (a[$2]++ == 0) print $0; }' >> ${workdir}/.system/install/packages/${grp}/${pkg}
+	rm ${workdir}/.system/install/packages/${grp}/${pkg}2 
+
+	echo "EOD" >> ${workdir}/.system/install/packages/${grp}/${pkg}
+	
+	local pkgdeps1=""
+	local pkgdeps=""
+	#local pkgdeps=""
+	
+	#pkgdeps1="$(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Si ${1} | grep "Depends On" | sed 's/[[:blank:]]\+/ /g' | sed -n 's/.*:\(.*\)/\1/p' | sed  's/None//')"
+	#pkgdeps1="${pkgdeps1[@]}  $(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Si ${1} | sed -n '/Optional/,/^$/p' | sed '/Required.*/,$d' | sed '/Conflicts.*/,$d' | sed 's/ \[installed\]//g' | sed 's/Optional Deps   ://' | sed 's/:.*//' | sed 's/[[:blank:]]\+/ /g' | sed ':a;N;$!ba;s/\n/ /g' | sed  's/None//')"
+	
+	pkgdeps1="$(echo "${pacOutput}" | grep "Depends On" | sed 's/[[:blank:]]\+/ /g' | sed -n 's/.*:\(.*\)/\1/p' | sed  's/None//')"
+	pkgdeps1="${pkgdeps1[@]}  $(echo "${pacOutput}" | sed -n '/Optional/,/^$/p' | sed '/Required.*/,$d' | sed '/Conflicts.*/,$d' | sed 's/ \[installed\]//g' | sed 's/Optional Deps   ://' | sed 's/:.*//' | sed 's/[[:blank:]]\+/ /g' | sed ':a;N;$!ba;s/\n/ /g' | sed  's/None//')"
+	
+	pkgdeps1="$(echo ${pkgdeps1[@]}  |  sed 's/[[:blank:]]\+/ /g')"
+	pkgdeps1="$(echo ${pkgdeps1[@]}  |  sed 's/[>|<]=\?[0-9]*[0-9]*[\.|-]\?[0-9]*[0-9]*[\.|-]\?[0-9]*[0-9]*[\.|-]\?[0-9]*[0-9]*//g')"
+	
+	for deppkg in ${pkgdeps1[@]}
+	do
+		if pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Qi ${deppkg} &> /dev/zero
+		then
+			pkgdeps="$(echo ${pkgdeps[@]}) $deppkg"
+		fi
+	done
+	
+	echo "${pkgdeps[@]}" >>  ${workdir}/.system/install/packages/${grp}/${pkg}
+	echo "EOR" >> ${workdir}/.system/install/packages/${grp}/${pkg}
+	
+	#pkgdependencies="$(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Si ${1} | grep "Required By" | sed -n 's/.*:\(.*\)/\1/p' | sed  's/None//')"
+	pkgdependencies="$(echo "{$pacOutput}" | grep "Required By" | sed -n 's/.*:\(.*\)/\1/p' | sed  's/None//')"
+	
+	pkgdependencies="$(echo $pkgdependencies |  sed 's/[[:blank:]]\+/ /g')"
+	pkgdependencies="$(echo $pkgdependencies |  sed 's/[>|<]=\?[0-9]*\.\?[0-9]*//g')"
+	pkgdependencies="$(echo ${pkgdependencies[@]}  |  sed 's/[>|<]=\?[0-9]*[0-9]*[\.|-]\?[0-9]*[0-9]*[\.|-]\?[0-9]*[0-9]*[\.|-]\?[0-9]*[0-9]*//g')"
+	
+	echo "${pkgdependencies[@]}" >>  ${workdir}/.system/install/packages/${grp}/${pkg}
+	echo "EOK" >> ${workdir}/.system/install/packages/${grp}/${pkg}
+		
+	pacman --config ${pacmantmpconf} --dbpath ${workdir}/.system/var/lib/pacman/ -Ql ${pkg} | awk '{print $2}' >> ${workdir}/.system/install/packages/${grp}/${pkg}
+##	if pacman --config ${pacmantmpconf} --dbpath ${workdir}/.system/var/lib/pacman/ -Ql ${pkg} |  grep "/etc/rc.d/..*"
+##	#if pacman --config ${pacmantmpconf} --dbpath ${workdir}/.system/var/lib/pacman/ -Ql ${pkg} |  egrep ^/etc/rc.d/.+
+##	then
+##		for rcfile in $(pacman --config ${pacmantmpconf} --dbpath ${workdir}/.system/var/lib/pacman/ -Ql ${pkg} | grep "/etc/rc.d/..*" | awk '{print $2}')
+##		do
+##			echo "/etc/init.d/${rcfile##/*/}" >> ${workdir}/.system/install/packages/${grp}/${pkg}
+##		done
+##	fi
+	(( PKGSINFO-- ))
+}
+
+generate_packages_info_file()
+{
+	loginfo "making packages info for the installer"
+	PARALLELCOUNTER=0
+	#for pkg in ${pkglistcount[@]}
+	for ipkg in $( pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Q | awk '{print $1}')
+	do
+		if pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Sg ${ipkg} | grep ${ipkg} 2>&1>/dev/null 
+		then
+			for grppkg in $(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Sg ${ipkg} | awk '{prtint $2}')
+			do
+				(( PKGSINFO++ ))
+				(( PARALLELCOUNTER++ ))
+				generate_package_info_file ${grppkg}
+			done
+		else
+			(( PKGSINFO++ ))
+			(( PARALLELCOUNTER++ ))
+			generate_package_info_file ${ipkg}
+		fi
+		
+		if [[ PARALLELCOUNTER == 20 ]]
+		then
+			#sleep 4s
+			PARALLELCOUNTER=0
+		fi
+	done
+	
+	sleep 10s
+}
+
+expand_groups()
+{
+	loginfo "expanding package groups"
+	expandedgroups=()
+	(( count=0 ))
+	for ipkg in ${pkglistcount[@]}
+	do
+		if pacman -Sg $ipkg | grep $ipkg &> /dev/null
+		then
+			logwarning "$ipkg is a group , Expanding !"
+			pkglistcount=(${pkglistcount[@]:0:$count} ${pkglistcount[@]:$(($count + 1))})
+			expandedgroups=( ${expandedgroups[@]} $(pacman --config ${pacmantmpconf} --root ${workdir}/.system --dbpath ${workdir}/.system/var/lib/pacman/ -Sg $ipkg | awk '{print $2}') )
+			break
+		fi
+		(( count++ ))
+	done
+	pkglistcount=(${pkglistcount[@]} ${expandedgroups[@]})
+}
+
+clear_ignore_conflicts()
+{
+	loginfo "clearing package conflicts"
+	for grp in $(ls $currdir/data/pkggroups/)
+	do
+		if echo $grp | grep "ignore" 2>&1>/dev/null
+		then
+			ignoredpkglistcount=( ${ignoredpkglistcount[@]} $(cat $currdir/data/pkggroups/$grp) )
+		fi
+	done
+	
+	for ignoredpkg in ${ignoredpkglistcount[@]}
+	do
+		(( count=0 ))
+		for ipkg in ${pkglistcount[@]}
+		do
+			if [[ $ipkg == $ignoredpkg ]]
+			then
+				logwarning "$ipkg is in ignore list and yet chosen for installation"
+				logwarning "removing $ipkg from installation"
+				pkglistcount=(${pkglistcount[@]:0:$count} ${pkglistcount[@]:$(($count + 1))})
+				break
+			fi
+			(( count++ ))
+		done
+	done
+}
+
+make_pkg ()
+{
+
+TITLE="Making Packages"
+
+
+####################################
+# install packages to the system   #
+####################################
+
+pkglog="${currdir}/pkglog"
+
+if [[ ! -f $pkglog ]]
+then
+	loginfo "creating $pkglog"
+	touch $pkglog
+fi
+
+#expand_groups
+#generate_packages_info_file
+#exit 1
+
+#sed -e "s/ARCH/${profile_arch}/" -i ${currdir}/data/config/pacman.conf
+#sed -e "s/BASE/${currdir}/" ${currdir}/data/config/pacman.conf
+
+loginfo "creating ${workdir}/.system/var/lib/pacman "
+mkdir -p ${workdir}/.system/var/lib/pacman
+loginfo "updating pacman database at ${workdir}/.system"
+
+if ! pacman --dbpath ${workdir}/.system/var/lib/pacman/ --root ${workdir}/.system/ --logfile $pkglog --config ${pacmantmpconf} --arch ${profile_arch} -Sy
+then
+	logerror "couldn't syn pacman"
+	exit 1
+fi
+
+mkdir -p ${workdir}/.system/var/cache/pacman/pkg
+
+
+pkglistcount=(${pkglist})
+
+expand_groups
+
+ignoredpkglistcount=(${ignoredpkglist})
+maxcount=${#pkglistcount[@]}
+
+clear_ignore_conflicts
+
+
+#logwarning "would you like to to rebuild mesk repo ? please enter Y/n :"
+#read -n1 prompt
+	
+#if [[ $prompt == [Yy] ]]
+#then
+#	logwarning "rebuilding mesk repo"
+#	make_repo "${profile_arch}"
+#fi
+
+pacmanignored="null"
+# generate ignored packages list seperated by comma for pacman
+for ignoredpkg in ${ignoredpkgs}
+do
+	pacmanignored="${pacmanignored},$ignoredpkg"
+done
+
+
+for pkg in ${pkglistcount[*]}
+do
+	loginfo "downloading ${pkg}"
+    if ! pacman --ignore ${pacmanignored} --ignoregroup ${pacmanignored} --arch ${profile_arch} --noconfirm --cachedir $pkgscache --downloadonly --logfile $pkglog --root ${workdir}/.system/ --config ${pacmantmpconf} -S ${pkg}
+	then
+		logerror "couldn't install ${pkg}"
+		echo "couldn't install ${pkg}" >>  ${workdir}/pkgerrors
+	fi
+done
+
+##loginfo "downloading packages"
+##if ! pacman --ignore ${pacmanignored} --ignoregroup ${pacmanignored} --arch ${profile_arch} --noconfirm --cachedir $pkgscache --downloadonly --logfile $pkglog --root ${workdir}/.system/ --config ${pacmantmpconf} -S ${pkglistcount[*]}
+##then
+##	logerror "couldn't install pkgs"
+##	exit 1
+##fi
+	
+mkdir ${workdir}/.system/proc/
+mkdir ${workdir}/.system/sys/
+mkdir ${workdir}/.system/dev/
+mkdir ${workdir}/.system/dev/pts/
+
+
+loginfo "installing pacman and mesk-units to system root"
+pacman --arch ${profile_arch} --noconfirm --cachedir $pkgscache --logfile $pkglog --root ${workdir}/.system/ --config ${pacmantmpconf} -Sd pacman reflector dhcpcd squashfs-tools unionfs-fuse filesystem mesk-units grub arch-install-scripts
+
+loginfo "preparing chroot environment for pacman"
+mkdir ${workdir}/.system/pacmancache
+touch ${workdir}/.system/pacmanlog
+touch ${workdir}/.system/pacmanconf
+
+mount -o ro --bind $pkgscache ${workdir}/.system/pacmancache
+mount --bind $pkglog  ${workdir}/.system/pacmanlog
+mount -o ro --bind $pacmantmpconf ${workdir}/.system/pacmanconf
+
+arch-chroot ${workdir}/.system/ dhcpcd -4
+#chroot ${workdir}/.system/ /usr/bin/reflector -a 10 -f 5 --save /etc/pacman.d/mirrorlist
+
+arch-chroot ${workdir}/.system/ pacman-key --init
+arch-chroot ${workdir}/.system/ pacman-key --yes --populate archlinux
+#if ! pacman --ignore ${pacmanignored} --ignoregroup ${pacmanignored} --arch ${profile_arch} --noconfirm --cachedir $pkgscache --logfile $pkglog --root ${workdir}/.system/ --config ${pacmantmpconf} -S ${pkglistcount[@]}
+
+sed 's/#Server/Server/g' -i ${workdir}/.system/etc/pacman.d/mirrorlist
+if ! chrcommand pacman --force --arch ${profile_arch} --noconfirm --cachedir /pacmancache --logfile /pacmanlog --config /pacmanconf -S ${pkglistcount[@]} squashfs-tools unionfs-fuse
+then
+	logerror "failed to install pakcages to ${workdir}/.system/"
+	logerror "Aborting"
+	clean_chroot
+	exit 1
+fi
+
+loginfo "Starting init"
+chrcommand systemctl enable local.d
+chrcommand systemctl enable local-rc
+chrcommand systemctl enable systemd-tmpfiles-setup
+
+chroot ${workdir}/.system/ pacman-key --init
+chroot ${workdir}/.system/ pacman-key --populate archlinux
+
+#if ! pacman --arch ${profile_arch} --noconfirm --cachedir $pkgscache --logfile $pkglog --root ${workdir}/.system/ --config ${pacmantmpconf} -Rsc ${ignoredpkgs} ${ignoredpkglistcount[@]}
+#then
+	#logerror "failed to remove ignored packages to ${workdir}/.system/"
+	#logerror "Aborting"
+#fi
+
+#chroot ${workdir}/.system/  splashy_config -s darch-white
+
+generate_packages_info_array
+generate_packages_info_file
+
+
+chrcommand ${workdir}/.system/ locale-gen
+##chroot ${workdir}/.system/ rc-update -u
+
+
+##clean_chroot
+
+
+
+##mkdir -p ${workdir}/.system/install/postpackagesrepo/
+
+##loginfo "getting/updating post packages"
+##cpwd=$(pwd)
+##for postpkg in $(ls -1 ${currdir}/data/postpackages)
+##do
+	#loginfo "copying ${postpkg}"
+	#if ! pacman --ignore ${pacmanignored} --ignoregroup ${pacmanignored} --arch ${profile_arch} --noconfirm --cachedir $pkgscache --downloadonly --logfile $pkglog --root ${workdir}/.system/ --config ${pacmantmpconf} -S ${postpkg}
+	#then
+		#logerror "couldn't install ${pkg}" >>  ${workdir}/pkgerrors
+	#fi
+##	loginfo "getting group ${postpkg}"
+##	get_postpkgs ${currdir}/data/postpackages/$postpkg
+##done
+
+##cd $cpwd
+
+##loginfo "getting/updating post packages info"
+
+##cp -r ${currdir}/data/postpackages ${workdir}/.system/install/
+#$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --msgbox "$(cat $pkglog)" 20 70
+
+}
+
+get_postpkgs()
+{
+	cd $1
+	if [[ -e "pkgs" ]]
+	then
+		for ppkg in $(cat pkgs)
+		do
+			if ! pacman --ignore ${pacmanignored} --ignoregroup ${pacmanignored} --arch ${profile_arch} --noconfirm --cachedir ${workdir}/.system/install/postpackagesrepo/ --downloadonly --logfile $pkglog --root ${workdir}/.system/ --config ${pacmantmpconf} -S ${ppkg}
+			then
+				logerror "couldn't install ${pkg}" >>  ${workdir}/pkgerrors
+			else
+				logerror "downloaded ${ppkg}"
+			fi
+		done
+	fi
+	
+	for subcat in $(ls -1 $1)
+	do
+		if [[ -d "$subcat" ]]
+		then
+			loginfo "getting sub group ${subcat}"
+			get_postpkgs $1/$subcat
+		fi
+	done
+	cd ..
+}
+
+clean_chroot()
+{
+
+	umount -Rf /${workdir}/.system/
+	umount -fl ${workdir}/.system/proc/
+	umount -fl ${workdir}/.system/sys/
+	umount -fl ${workdir}/.system/dev/pts/
+	umount -fl ${workdir}/.system/dev/shm
+	umount -fl ${workdir}/.system/dev/
+
+
+	loginfo "clearing chroot environment"
+	umount -fl ${workdir}/.system/pacmancache
+	umount -fl ${workdir}/.system/pacmanlog
+	umount -fl ${workdir}/.system/pacmanconf
+
+	rm ${workdir}/.system/pacmanlog
+	rm ${workdir}/.system/pacmanconf
+	rm -r ${workdir}/.system/pacmancache
+
+}
+
+

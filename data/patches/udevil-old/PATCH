@@ -1,0 +1,19 @@
+PKG_PREBUILD()
+{
+cp ${PKG_PATCHDIR}/devmon ${PKG_BUILDDIR}/
+sed -e '/source/,/)/s/)/ devmon)/' -i ${PKG_BUILDDIR}/PKGBUILD
+
+
+}
+
+PKG_PREPACKAGE()
+{
+##install -Dm771 devmon $pkgdir/etc/init.d/devmon
+##ln -s /etc/init.d/devmon /etc/runlevels/boot/
+#cp devmon $pkgdir/etc/init.d/
+
+install -Dm755 devmon $pkgdir/etc/init.d/devmon
+mkdir -p ${pkgdir}/etc/runlevels/boot
+ln -s /etc/init.d/devmon ${pkgdir}/etc/runlevels/boot/
+
+}

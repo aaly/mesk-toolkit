@@ -1,0 +1,41 @@
+#ati
+xf86-video-ati
+libdrm
+ati-dri
+##libgl
+
+#open soutce nvidia
+nouveau-dri
+xf86-video-nouveau
+libdrm
+
+#nvidia 96
+##nvidia-96xx
+##nvidia-96xx-utils
+##xorg-server1.12
+
+#nvidia 304
+##nvidia-304xx
+##nvidia-304xx-utils
+##opencl-nvidia-304xx
+
+#nvidia 173
+##opencl-nvidia-275xx
+##nvidia-173xx
+##nvidia-173xx-utils
+##libvdpau
+
+#nvidia
+nvidia
+nvidia-utils
+nvclock
+nvdock
+nvidia-cg-toolkit
+
+#catalyst legacy
+catalyst-total-hd234k
+
+#catalyst
+catalyst-dkms
+opencl-catalyst
+catalyst-utils

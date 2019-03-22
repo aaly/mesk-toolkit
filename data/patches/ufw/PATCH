@@ -1,0 +1,9 @@
+PKG_PREBUILD()
+{
+:
+}
+
+PKG_POSTPACKAGE()
+{
+sed 's/PATH=/PATH=$PATH:/' -i ${pkgdir}/usr/lib/ufw/ufw-init-functions
+}

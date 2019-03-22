@@ -1,0 +1,4 @@
+if ! [[ -e /proc/asound ]]
+then
+/etc/init.d/oss start &
+fi

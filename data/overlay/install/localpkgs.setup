@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo ":: Configuring System Packages, please wait .... "
+
+for pkg in /var/lib/pacman/local/*
+do
+	if [ -e $pkg/install ]
+	then
+		. $pkg/install
+		if [[ $(type -t post_install) == "function" ]]
+		then
+			echo ":: Configuring  Package : ${pkg##*/}"
+			post_install
+		fi
+		unset -f post_install
+	fi
+done
+
+rm /etc/local.d/localpkgs.start
+#reboot

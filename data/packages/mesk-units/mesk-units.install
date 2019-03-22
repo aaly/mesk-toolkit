@@ -1,0 +1,5 @@
+post_install()
+{
+systemctl enable local.d
+systemctl enable rc-local
+}

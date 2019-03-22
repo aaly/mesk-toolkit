@@ -1,0 +1,10 @@
+PKG_PREBUILD()
+{
+sed 's/dbus-python/python2-dbus/' -i ${PKG_BUILDDIR}/PKGBUILD
+}
+
+PKG_POSTPACKAGE()
+{
+sed 's/PATH=/PATH=$PATH:/' -i ${pkgdir}/etc/rc.d/avahi-daemon
+sed 's/PATH=/PATH=$PATH:/' -i ${pkgdir}/etc/rc.d/avahi-dnsconfd
+}

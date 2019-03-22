@@ -1,0 +1,4 @@
+
+config_eth0="dhcp"
+dhcpcd_eth0="-t 10" # Timeout after 10 seconds
+dhcp_eth0="release nodns nontp nonis" # Only get an address

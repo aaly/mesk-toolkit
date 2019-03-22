@@ -1,0 +1,4 @@
+PKG_PREBUILD()
+{
+sed -e "s/^\(makedepends[^)]*\)/\1 'foomatic-db-engine'/" -i ${PKG_BUILDDIR}/PKGBUILD
+}

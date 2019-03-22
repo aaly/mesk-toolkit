@@ -1,0 +1,88 @@
+# Build The Release
+# By Abdallah Aly 2010
+
+
+
+# show two options , use old packages or rebuild them
+burntoflash ()
+{
+
+
+TITLE="Burn ISO to flash stick"
+
+if [[ -z ${profile_name} ]]
+then
+	$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --clear --msgbox "you must select a profile" 20 70
+	return 1
+fi
+
+TITLE="Select an ISO"
+
+ISOFILESA=(${currdir}/profiles/${profile_name}/workdir/*.iso)
+
+for file in ${ISOFILESA[@]}
+do
+ISOFILES=(${ISOFILES[@]} "$file" "${file/*\/}")
+done
+
+
+$DIALOG --clear --backtitle "Mesk Linux release builder" --title "$TITLE" --menu "pick your iso file: " 20 120 30 \
+${ISOFILES[@]} 2> /tmp/menuchoice.$$
+
+case $? in
+1)
+   return 1;;
+255)
+   return 255;;
+esac
+
+ISOFILE=""
+ISOFILE=$(cat /tmp/menuchoice.$$)
+
+TITLE="Select a device"
+
+FLASHDEVICESA=( $(ls /dev/sd[a-z]) )
+
+for device in ${FLASHDEVICESA[@]}
+do
+	if cat /sys/block/${device/*\/}/removable | grep 1 &> /dev/null && [[ ${device/[0-9]*/} != "fd" ]]
+	then
+		FLASHDEVICES=(${FLASHDEVICES[@]} "$device" "${device/*\/}")
+	fi
+done
+
+$DIALOG --clear --backtitle "Mesk Linux release builder" --title "$TITLE" --menu "pick your emulator: " 20 70 30 \
+${FLASHDEVICES[@]} 2> /tmp/menuchoice.$$
+
+case $? in
+1)
+   return 1;;
+255)
+   return 255;;
+esac
+
+FLASHDEVICE=$(cat /tmp/menuchoice.$$)
+
+if which pp &> /dev/null
+then
+	pp if=$ISOFILE of=$FLASHDEVICE bs=1M
+else
+	dd if=$ISOFILE of=$FLASHDEVICE bs=1M
+fi
+
+#loginfo "building ${profile_name} at ${workdir}"
+
+#if [[ -d ${workdir} ]]
+#then
+	#logwarning "would you like to clean ${workdir} ? please enter Y/n :"
+	#read -n1 prompt
+	
+	#if [[ $prompt == [Yy] ]]
+	#then
+	#	logwarning "cleaning ${workdir}"
+	#	rm -rf ${workdir}
+	#fi
+	
+#fi
+
+}

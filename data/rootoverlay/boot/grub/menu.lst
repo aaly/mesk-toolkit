@@ -1,0 +1,36 @@
+timeout 5
+default 0
+#color light-gray/blue black/light-gray
+##splashimage /boot/splash.xpm.gz
+#splashimage /boot/grub1280x1024_doc04.xpm.gz
+
+title  Boot Mesk Linux ( Arabic  )
+#kernel /boot/vmlinuz-linux ro quiet splash=verbose,fadein,fadeout,theme:mesk console=tty1 vga=791 locale=ar_EG.utf8 edd=off
+kernel /boot/vmlinuz-linux ro quiet locale=ar_EG.utf8 edd=off
+initrd /boot/initramfs-linux.img
+
+title  Boot Mesk Linux ( English )
+kernel /boot/vmlinuz-linux ro quiet locale=en_US.utf8 edd=off
+initrd /boot/initramfs-linux.img
+
+title  Boot Mesk Linux Installer And Recovery
+kernel /boot/vmlinuz-linux ro quiet locale=en_US.utf8 edd=off installer=true
+initrd /boot/initramfs-linux.img
+
+title Tools...
+configfile /boot/grub/tools.lst
+
+title Grub Settings...
+configfile /boot/grub/settings.lst
+
+#title View Help...
+#configfile /boot/grub/help.lst
+
+title More Options...
+configfile /boot/grub/more.lst
+
+title  Shutdown the Computer
+halt
+
+title  Reboot the Computer
+reboot

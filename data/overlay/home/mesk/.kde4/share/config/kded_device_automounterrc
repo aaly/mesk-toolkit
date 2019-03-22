@@ -1,0 +1,75 @@
+[Devices][/org/freedesktop/UDisks2/block_devices/fd0]
+Icon=media-floppy
+LastNameSeen=0 بت وسائط القابلة للإزالة
+LastSeenMounted=false
+
+[Devices][/org/freedesktop/UDisks2/block_devices/loop0]
+Icon=drive-harddisk
+LastNameSeen=Loop Device
+LastSeenMounted=false
+
+[Devices][/org/freedesktop/UDisks2/block_devices/loop1]
+Icon=drive-harddisk
+LastNameSeen=Loop Device
+LastSeenMounted=false
+
+[Devices][/org/freedesktop/UDisks2/block_devices/sda1]
+Icon=drive-harddisk
+LastNameSeen=28.9 GiB Hard Drive
+LastSeenMounted=false
+
+[Devices][/org/freedesktop/UDisks2/block_devices/sda2]
+EverMounted=true
+Icon=drive-harddisk
+LastNameSeen=28.9 GiB Hard Drive
+LastSeenMounted=true
+
+[Devices][/org/freedesktop/UDisks2/block_devices/sda3]
+EverMounted=true
+Icon=drive-harddisk
+LastNameSeen=STUFF
+LastSeenMounted=true
+
+[Devices][/org/freedesktop/UDisks2/block_devices/sda5]
+EverMounted=true
+Icon=drive-harddisk
+LastNameSeen=٤٠٫٩ جيجا بايت قرص صلب
+LastSeenMounted=true
+
+[Devices][/org/freedesktop/UDisks2/block_devices/sda6]
+Icon=drive-harddisk
+LastNameSeen=Stuff
+LastSeenMounted=false
+
+[Devices][/org/freedesktop/UDisks2/block_devices/sda7]
+EverMounted=true
+Icon=drive-harddisk
+LastNameSeen=٣٩٨٫٨ جيجا بايت قرص صلب
+LastSeenMounted=true
+
+[Devices][/org/freedesktop/UDisks2/block_devices/sdb]
+EverMounted=true
+Icon=drive-removable-media-usb
+LastNameSeen=ISOIMAGE
+LastSeenMounted=true
+
+[Devices][/org/freedesktop/UDisks2/block_devices/sdb1]
+Icon=drive-removable-media-usb
+LastNameSeen=ISOIMAGE
+LastSeenMounted=false
+
+[Devices][/org/freedesktop/UDisks2/block_devices/sdb2]
+Icon=drive-removable-media-usb
+LastNameSeen=ISOIMAGE
+LastSeenMounted=false
+
+[Devices][/org/freedesktop/UDisks2/block_devices/sdb3]
+Icon=drive-removable-media-usb
+LastNameSeen=ISOIMAGE
+LastSeenMounted=false
+
+[Devices][/org/freedesktop/UDisks2/block_devices/sdc1]
+EverMounted=true
+Icon=drive-removable-media-usb
+LastNameSeen=1.9 GiB Removable Media
+LastSeenMounted=true

@@ -1,0 +1,203 @@
+#!/bin/bash
+
+# Build The Release
+# By Abdallah Aly 2010
+
+
+chrcommand()
+{
+	mount --bind /dev ${workdir}/.system/dev
+	mount --bind /dev/pts ${workdir}/.system/dev/pts
+	mount --bind /dev/shm ${workdir}/.system/dev/shm
+	mount -t proc none ${workdir}/.system/proc
+	mount -t sysfs none ${workdir}/.system/sys
+
+	chroot ${workdir}/.system/ $@
+
+        umount -Rf ${workdir}/.system/
+        umount -fl ${workdir}/.system/proc/
+        umount -fl ${workdir}/.system/sys/
+        umount -fl ${workdir}/.system/dev/pts/
+        umount -fl ${workdir}/.system/dev/shm
+        umount -fl ${workdir}/.system/dev/
+}
+
+# show two options , use old packages or rebuild them
+build ()
+{
+
+
+TITLE="Building Release"
+
+if [[ -z ${profile_name} ]]
+then
+	$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --clear --msgbox "you must select a profile" 20 70
+	return 1
+fi
+
+
+loginfo "building ${profile_name} at ${workdir}"
+
+if [[ -d ${workdir} ]]
+then
+	logwarning "would you like to clean ${workdir} ? please enter Y/n :"
+	read -n1 prompt
+	
+	if [[ $prompt == [Yy] ]]
+	then
+		logwarning "cleaning ${workdir}"
+		rm -rf ${workdir}
+	fi
+	
+fi
+
+# make the iso work dir
+loginfo "creating ${workdir}/.system"
+mkdir -p ${workdir}/.system
+loginfo "creating ${workdir}/.overlay"
+mkdir -p ${workdir}/.overlay
+loginfo "creating ${workdir}/iso"
+mkdir -p ${workdir}/iso
+
+# build packages
+make_pkg
+
+
+#copy overlay files to .overlay
+loginfo "copying default overlay files to ${workdir}/.overlay"
+cp -rfp ${currdir}/data/overlay/* ${workdir}/.overlay/
+loginfo "copying profile overlay files to ${workdir}/.overlay"
+cp -rfp ${currdir}/profiles/${profile_name}/overlay/* ${workdir}/.overlay
+loginfo "copying default rootoverlay files to ${workdir}/iso"
+cp -rfp ${currdir}/data/rootoverlay/* ${workdir}/iso
+loginfo "copying profile rootoverlay files to ${workdir}/iso"
+cp -rfp ${currdir}/profiles/${profile_name}/rootoverlay/* ${workdir}/iso
+
+loginfo "saving original files from overlay files"
+mkdir -p ${workdir}/.system/install/
+find ${workdir}/.overlay/ | sed -e "s|${workdir}/.overlay||" > ${workdir}/.system/install/overlayfiles
+for file in $(cat ${workdir}/.system/install/overlayfiles)
+do
+	if [[ -f $file ]]
+	then
+		mv "${workdir}/.system${file}" "${workdir}/.system${file}.mesksave" &> /dev/null
+	fi
+done
+
+loginfo "adding mesk user and configuring root"
+
+cp ${workdir}/.system/etc/passwd.mesksave ${workdir}/.overlay/etc/passwd
+cp ${workdir}/.system/etc/group.mesksave ${workdir}/.overlay/etc/group
+cp ${workdir}/.system/etc/shadow.mesksave ${workdir}/.overlay/etc/shadow
+
+sed 's/root:x/root/' -i ${workdir}/.overlay/etc/shadow
+echo 'mesk:$1$ADalZKA.$OJWfaX41RnRCHAb8jyHuk/:14406:0:99999:7:::' >> ${workdir}/.overlay/etc/shadow
+
+echo 'mesk:x:1973:100:,,,:/home/mesk:/bin/bash' >> ${workdir}/.overlay/etc/passwd
+
+sed 's/$/,mesk/' -i ${workdir}/.overlay/etc/group
+
+
+##loginfo "touching services"
+##touch ${workdir}/currtime
+##find ${workdir}/.system/etc/init.d/ -newer ${workdir}/currtime -exec touch {} \;
+##rm ${workdir}/currtime
+
+##rm ${workdir}/.system/etc/runlevels/boot/hwclock
+
+#make squash fs images
+mkdir ${workdir}/iso/
+mksquashfs ${workdir}/.system ${workdir}/iso/system.sfs
+mksquashfs ${workdir}/.overlay ${workdir}/iso/overlay.sfs
+
+# make the grub
+loginfo "copying grub stuff"
+mkdir ${workdir}/iso/boot/
+#cp ${workdir}/.system/boot/vmlinuz-linux* ${workdir}/iso/boot/
+#cp ${workdir}/.system/usr/share/grub/stage2_eltorito ${workdir}/iso/boot/grub/
+
+cp ${currdir}/data/config/mkinitcpio.conf ${workdir}/.system/etc/mkinitcpio.conf.tmp
+for hook in $(ls ${currdir}/data/hooks/)
+do
+	if [[ ${hook/*.} == "install"  ]]
+	then
+		cp  ${currdir}/data/hooks/${hook} ${workdir}/.system/usr/lib/initcpio/install/${hook/.install}
+	elif [[ ${hook/*.} == "hook" ]]
+	then
+		cp  ${currdir}/data/hooks/${hook} ${workdir}/.system/usr/lib/initcpio/hooks/${hook/.hook}
+	fi
+done
+
+for kernel in $(ls ${workdir}/.system/usr/lib/modules/)
+do
+	if [[ "${kernel/-*/}" == "extramodules" ]]
+	then
+		continue
+	fi
+	
+	loginfo "making the initcpio image for $kernel"
+	kernelver="${kernel/*\//}"
+	chrcommand mkinitcpio -c /etc//mkinitcpio.conf.tmp -k  ${kernel} -g "/boot/${kernelver}.img"
+	loginfo "copying the initcpio image for to the iso"
+	cp ${workdir}/.system/boot/${kernelver}.img "${workdir}/iso/boot/"
+
+done
+
+
+for kernel in $(ls ${workdir}/.system/boot/vmlinuz*)
+do
+        loginfo "copying kernel $kernel to live boot directory"
+        cp $kernel "${workdir}/iso/boot/"
+done
+
+
+loginfo "Deciding the default boot kernel image"
+
+#kernels="$(ls ${workdir}/iso/boot/*.img)"
+for kernelimg in $(ls ${workdir}/iso/boot/ | grep ARCH.img | sort -R)
+do
+	loginfo "${kernelimg} chosen"
+	mv ${workdir}/iso/boot/${kernelimg}  ${workdir}/iso/boot/initramfs-linux.img
+	break
+done
+rm ${workdir}/.system/etc/mkinitcpio.conf.tmp
+
+loginfo "Deciding the login manager"
+
+chrcommand systemctl -f disable multi-user.target
+chrcommand systemctl -f disable systemd-tmpfiles-setup.service
+if [ -e ${workdir}/.system/usr/lib/systemd/system/kdm.service ]
+then
+    chrcommand systemctl -f enable kdm.service graphical.target
+elif [ -e ${workdir}/.system/usr/lib/systemd/system/gdm.service ]
+then
+    chrcommand systemctl -f enable gdm.service graphical.target
+elif [ -e ${workdir}/.system/usr/lib/systemd/system/lxdm.service ]
+then
+    chrcommand systemctl -f enable lxdm.service graphical.target
+fi
+
+
+
+#inidicate it's a livecd
+loginfo "indicating livecd"
+touch ${workdir}/iso/MESKLIVE
+
+#create the iso
+#rm -r ${workdir}/.system
+loginfo "creating the iso"
+#mkisofs -allow-limited-size -r -l -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -input-charset=UTF-8 -publisher "puplished by AbdALlah ALy" -A "AbdAllah Aly" -o ${workdir}/mesk2.iso ${workdir}/iso/
+grub-mkrescue -o ${workdir}/mesk2.iso  ${workdir}/iso/
+#isohybrid ${workdir}/mesk2.iso
+
+#mkhybrid -allow-limited-size -r -l -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -input-charset=UTF-8 -publisher "puplished by AbdALlah ALy" -A "AbdAllah Aly" -o ${workdir}/mesk2.iso ${workdir}/iso/
+
+# grub-mkimage --format=i386-pc -c ${currdir}/data/config.cfg -o ${workdir}/mesk2.iso ${workdir}/iso/
+
+if [[ $? == 32 ]]
+then
+	logerror "No Space available for building ISO"
+fi
+
+}
+

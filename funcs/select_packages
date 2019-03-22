@@ -1,0 +1,322 @@
+# Packages Selection for custom profile
+# By Abdallah Aly 2010
+
+#####pacmanlistpopulated=($(pacman -conf ${currdir}/data/conf/pacman.conf.${profilearch} -Sl | awk '{print $2 " " $1}'))
+
+pacmanlistpopulated=
+pkg_repo()
+{
+	
+if [[ ${2} == "reset" ]]
+then
+	pacmanlistpopulated=
+	return 0
+fi
+	
+if [[ -z ${pacmanlistpopulated} ]]
+then
+	if [[ ${2} == "official" ]]
+	then
+		pacmanlistpopulated=($(pacman -Sl | awk '{print $2 " " $1}'))
+	else
+		pacmanlistpopulated=($(pacman --config ${pacmantmpconf} -Sl | awk '{print $2 " " $1}'))
+	fi
+fi
+
+local break="n"
+pkgrepo=""
+
+for spkg in ${pacmanlistpopulated[@]}
+do
+	if [[ $break  == "y" ]]
+	then
+		pkgrepo=$spkg
+		break;
+	fi
+	
+	if [[ $spkg == ${1} ]]
+	then
+		break="y"
+	fi
+done
+
+
+if [[ -z ${pkgrepo} ]]
+then
+	pkgrepo="AUR"
+fi
+}
+
+ignoredpkgs=
+
+generate_ignoredpkgs()
+{
+	for ignorepkglist in $(ls $currdir/data/pkggroups/)
+do
+	if [[ -f $currdir/data/pkggroups/${ignorepkglist}.ignore ]]
+	then
+		while read ignoredpkg
+		do
+			if ! echo ${ignoredpkg} | grep '#' 2>&1>/dev/null && [[ ! -z $ignoredpkg ]]
+			then
+				ignoredpkgs="${ignoredpkgs} ${ignoredpkg}"
+			fi
+		done <$currdir/data/pkggroups/${ignorepkglist}.ignore
+	fi
+done
+}
+
+select_packages ()
+{
+
+#make_pkggroups
+
+TITLE="Packages Selection for custom profile"
+
+
+
+for grp in $(ls $currdir/data/pkggroups/)
+do
+	if echo $grp | grep "ignore" 2>&1>/dev/null
+	then
+		continue
+	fi
+	
+	for selectedgrp in ${pkgsgrps[@]}
+	do
+		if [ "$selectedgrp" = "$grp" ]
+		then
+			grplistdisplay="$grplistdisplay $grp "^" on"
+			continue 2
+		fi
+	done
+	grplistdisplay="$grplistdisplay $grp "-" off"
+done
+
+$DIALOG --separate-output --backtitle "$BACKTITLE" --title "$TITLE" --clear --checklist "Select package groups :" 20 70 20 $grplistdisplay 2> /tmp/mlw.pg.$$
+
+unset selectedgrp
+
+case $? in
+  1)
+    return 1;;
+  255) 
+    return 255;;
+esac
+
+pkgsgrps=$(cat /tmp/mlw.pg.$$)
+
+unset grplistdisplay
+unset packagerepo
+#unset pkglist
+#unset pkgrepolist
+unset pkgrepo
+unset pkglistdisplay
+
+pkg_repo "null" "reset"
+
+for grp in $(ls $currdir/data/pkggroups/)
+do
+	if echo $grp | grep "ignore" 2>&1>/dev/null
+	then
+		continue
+	fi
+	
+	for selectedgrp in ${pkgsgrps[@]}
+	do
+		if [[ "$selectedgrp" == "$grp" ]]
+		then
+			#for pkg in $(cat $currdir/data/pkggroups/$selectedgrp)
+			while read pkg
+			do
+				if ! echo ${pkg} | grep '#' 2>&1>/dev/null && [[ ! -z $pkg ]]
+				then
+					##echo "adding packages $pkg $pkgrepo"
+					pkgrepo=""
+					pkg_repo $pkg
+					pkglistdisplay="$pkglistdisplay $pkg $pkgrepo on"
+				fi
+			#done
+			done <$currdir/data/pkggroups/$selectedgrp
+			continue 2
+		fi
+	done
+
+
+	#for pkg in $(cat $currdir/data/pkggroups/$grp)
+	while read pkg
+	do
+		if  echo ${pkg} | grep '#' 2>&1>/dev/null || [[ -z $pkg ]]
+		then
+			continue
+		fi
+		
+		for selectedpkg in ${pkglist[@]}
+		do
+			if [[ $pkg == $selectedpkg ]]
+			then
+				##echo "adding packages $pkg $pkgrepo"	
+				pkgrepo=""
+				pkg_repo $pkg
+				pkglistdisplay="$pkglistdisplay $pkg $pkgrepo on"
+				continue 2
+				
+			fi
+		done
+	
+		pkgrepo=""
+		pkg_repo $pkg
+		##echo "adding packages $pkg $pkgrepo"
+		pkglistdisplay="$pkglistdisplay $pkg $pkgrepo off"
+	#done
+	done <$currdir/data/pkggroups/$grp
+done
+
+
+
+#$DIALOG --separate-output --stdout --backtitle "$BACKTITLE" --title "$TITLE" --clear --checklist "Select package groups :" 20 70 20 $pkglistdisplay 2> /tmp/mlw.pl.$$
+$DIALOG --separate-output --backtitle "$BACKTITLE" --title "$TITLE" --clear --checklist "Select packages :" 20 70 20 $pkglistdisplay 2> /tmp/mlw.pl.$$
+
+case $? in
+  1|255|-1)
+    return $?;;
+esac
+
+
+pkglist=$(cat /tmp/mlw.pl.$$)
+rm /tmp/mlw.pl.$$
+#cat /tmp/mlw.pl.$$
+
+unset pkglistdisplay
+
+return 0
+
+}
+
+
+
+remove_packages ()
+{
+
+#make_pkggroups
+
+TITLE="Packages Selection for custom profile"
+
+
+
+for grp in $(ls $currdir/data/pkggroups/)
+do
+	if echo $grp | grep "ignore" 2>&1>/dev/null
+	then
+		continue
+	fi
+	
+	for selectedgrp in ${pkgsgrps[@]}
+	do
+		if [ "$selectedgrp" = "$grp" ]
+		then
+			grplistdisplay="$grplistdisplay $grp "^" on"
+			continue 2
+		fi
+	done
+	grplistdisplay="$grplistdisplay $grp "-" off"
+done
+
+$DIALOG --separate-output --backtitle "$BACKTITLE" --title "$TITLE" --clear --checklist "Select package groups :" 20 70 20 $grplistdisplay 2> /tmp/mlw.pg.$$
+
+unset selectedgrp
+
+case $? in
+  1)
+    return 1;;
+  255) 
+    return 255;;
+esac
+
+pkgsgrps=$(cat /tmp/mlw.pg.$$)
+
+unset grplistdisplay
+unset packagerepo
+#unset pkglist
+#unset pkgrepolist
+unset pkgrepo
+unset pkglistdisplay
+
+pkg_repo "null" "reset"
+
+for grp in $(ls $currdir/data/pkggroups/)
+do
+	if echo $grp | grep "ignore" 2>&1>/dev/null
+	then
+		continue
+	fi
+	
+	for selectedgrp in ${pkgsgrps[@]}
+	do
+		if [[ "$selectedgrp" == "$grp" ]]
+		then
+			#for pkg in $(cat $currdir/data/pkggroups/$selectedgrp)
+			while read pkg
+			do
+				if ! echo ${pkg} | grep '#' 2>&1>/dev/null && [[ ! -z $pkg ]]
+				then
+					##echo "adding packages $pkg $pkgrepo"
+					pkgrepo=""
+					pkg_repo $pkg
+					pkglistdisplay="$pkglistdisplay $pkg $pkgrepo on"
+				fi
+			#done
+			done <$currdir/data/pkggroups/$selectedgrp
+			continue 2
+		fi
+	done
+
+
+	#for pkg in $(cat $currdir/data/pkggroups/$grp)
+	while read pkg
+	do
+		if  echo ${pkg} | grep '#' 2>&1>/dev/null || [[ -z $pkg ]]
+		then
+			continue
+		fi
+		
+		for selectedpkg in ${ignoredpkglist[@]}
+		do
+			if [[ $pkg == $selectedpkg ]]
+			then
+				##echo "adding packages $pkg $pkgrepo"	
+				pkgrepo=""
+				pkg_repo $pkg
+				pkglistdisplay="$pkglistdisplay $pkg $pkgrepo on"
+				continue 2
+				
+			fi
+		done
+	
+		pkgrepo=""
+		pkg_repo $pkg
+		##echo "adding packages $pkg $pkgrepo"
+		pkglistdisplay="$pkglistdisplay $pkg $pkgrepo off"
+	#done
+	done <$currdir/data/pkggroups/$grp
+done
+
+
+
+#$DIALOG --separate-output --stdout --backtitle "$BACKTITLE" --title "$TITLE" --clear --checklist "Select package groups :" 20 70 20 $pkglistdisplay 2> /tmp/mlw.pl.$$
+$DIALOG --separate-output --backtitle "$BACKTITLE" --title "$TITLE" --clear --checklist "Select ignored packages :" 20 70 20 $pkglistdisplay 2> /tmp/mlw.pl.$$
+
+case $? in
+  1|255|-1)
+    return $?;;
+esac
+
+
+ignoredpkglist=$(cat /tmp/mlw.pl.$$)
+rm /tmp/mlw.pl.$$
+
+unset pkglistdisplay
+
+return 0
+
+}

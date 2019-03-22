@@ -1,0 +1,29 @@
+# Checking rquired packages
+# By Abdallah Aly 2010
+
+
+
+reqpkgs ()
+{
+
+TITLE="missed pkgs"
+
+for pkg in ${reqpkgslist[@]}
+do
+	#if [ "$(which $pkg 2>&1>/dev/null)" ]
+	if [ "$(pacman -Qi $pkg 2>&1>/dev/null)" ]
+	then
+		missedpkgs+="$pkg"
+		missedpkgs+=" "
+	fi
+done
+
+if [ -z "$missedpkgs" ]
+then
+	return 0
+else
+	$DIALOG --backtitle "$BACKTITLE" --title "Missed packages" --infobox "missing Package(s) : \n$missedpkgs" 20 70
+	return 1
+fi
+
+}

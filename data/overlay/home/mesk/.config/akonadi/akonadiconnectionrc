@@ -1,0 +1,6 @@
+[Data]
+Method=UnixPath
+UnixPath=/home/mesk/.local/share/akonadi/socket-MeskLinux/akonadiserver.socket
+
+[DBUS]
+Address="unix:abstract=/tmp/dbus-xQjSXqzjjB,guid=934edb33390ffadc4dbaa7a15248251f"

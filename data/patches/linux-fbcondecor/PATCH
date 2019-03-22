@@ -1,0 +1,4 @@
+PKG_PREBUILD()
+{
+sed -e 's|depmod -b "$pkgdir"|depmod -b "$pkgdir/usr"|' -i  ${PKG_BUILDDIR}/PKGBUILD
+}

@@ -1,0 +1,536 @@
+cat: /proc/2742/comm: No such file or directory
+Agent pid 1103
+startkde: Starting up...
+Connecting to deprecated signal QDBusConnectionInterface::serviceOwnerChanged(QString,QString,QString)
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+kbuildsycoca4 running...
+kbuildsycoca4(1152) KBuildSycoca::recreate: Recreating ksycoca file ("/var/tmp/kdecache-mesk/ksycoca4", version 226)
+kbuildsycoca4(1152) KBuildServiceTypeFactory::createEntry: The service type config file  "akonadinepomukfeeder.desktop"  has Type= ""  instead of Type=ServiceType 
+kbuildsycoca4(1152) VFolderMenu::pushDocInfo: Menu "applications-kmenuedit.menu" not found.
+kbuildsycoca4(1152) VFolderMenu::processMenu: Processing KDE Legacy dirs for <KDE>
+kbuildsycoca4(1152) VFolderMenu::processKDELegacyDirs:
+kbuildsycoca4(1152) VFolderMenu::loadApplications: Looking up applications under "/usr/share/applications/"
+kbuildsycoca4(1152) VFolderMenu::loadApplications: Looking up applications under "/usr/share/applications/kde4"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ServiceMenus/installfont.desktop" specifies undefined mimetype/servicetype "fonts/package"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "nepomukcontactfeeder.desktop" specifies undefined mimetype/servicetype "AkonadiNepomukFeeder"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ark_part.desktop" specifies undefined mimetype/servicetype "application/x-servicepack"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ark_part.desktop" specifies undefined mimetype/servicetype "application/lha"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ark_part.desktop" specifies undefined mimetype/servicetype "application/maclha"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "klinkstatus_part.desktop" specifies undefined mimetype/servicetype "text/english"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "klinkstatus_part.desktop" specifies undefined mimetype/servicetype "text/x-c++"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "cantor/cantor_part.desktop" specifies undefined mimetype/servicetype "application/x-cantor"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/kde4/cantor.desktop" specifies undefined mimetype/servicetype "application/x-cantor"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "grammar_link.desktop" specifies undefined mimetype/servicetype "Grammar/GrammarClient"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "kleopatra_decryptverifyfiles.desktop" specifies undefined mimetype/servicetype "applicaton/pkcs7-signature"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ServiceMenus/ark_servicemenu.desktop" specifies undefined mimetype/servicetype "application/x-servicepack"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ServiceMenus/ark_servicemenu.desktop" specifies undefined mimetype/servicetype "application/lha"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ServiceMenus/ark_servicemenu.desktop" specifies undefined mimetype/servicetype "application/maclha"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/avogadro.desktop" specifies undefined mimetype/servicetype "chemical/x-gaussian-checkpoint"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/avogadro.desktop" specifies undefined mimetype/servicetype "chemical/x-gaussian-cube"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/avogadro.desktop" specifies undefined mimetype/servicetype "chemical/x-qchem-output"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "nepomukmailfeeder.desktop" specifies undefined mimetype/servicetype "AkonadiNepomukFeeder"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "kerfuffle_clilha.desktop" specifies undefined mimetype/servicetype "application/lha"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "kerfuffle_clilha.desktop" specifies undefined mimetype/servicetype "application/maclha"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "video/x-quicktime"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "video/mkv"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/aiff"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/x-pn-aiff"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/x-realaudio"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/x-basic"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/x-pn-au"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/x-8svx"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/8svx"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/x-16sv"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/168sv"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "image/ilbm"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "video/anim"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "image/x-png"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "video/mng"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/x-real-audio"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/x-pn-wav"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/x-pn-windows-acm"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/mpeg2"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/x-mpeg2"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/mpeg3"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "phononbackends/gstreamer.desktop" specifies undefined mimetype/servicetype "audio/x-mpeg3"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "windowsexethumbnail.desktop" specifies undefined mimetype/servicetype "application/x-msdownload"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "fileviewhgplugin.desktop" specifies undefined mimetype/servicetype "FileViewVersionControlPlugin2"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/kde4/kalgebra.desktop" specifies undefined mimetype/servicetype "application/x-kalgebra"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "nepomuknotefeeder.desktop" specifies undefined mimetype/servicetype "AkonadiNepomukFeeder"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "videopreview.desktop" specifies undefined mimetype/servicetype "video/*"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "nepomukcalendarfeeder.desktop" specifies undefined mimetype/servicetype "AkonadiNepomukFeeder"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ffmpegthumbs.desktop" specifies undefined mimetype/servicetype "video/*"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ark_dndextract.desktop" specifies undefined mimetype/servicetype "application/x-servicepack"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ark_dndextract.desktop" specifies undefined mimetype/servicetype "application/lha"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ark_dndextract.desktop" specifies undefined mimetype/servicetype "application/maclha"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "fontthumbnail.desktop" specifies undefined mimetype/servicetype "fonts/package"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/firefox.desktop" specifies undefined mimetype/servicetype "text/mml"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/kde4/rocs.desktop" specifies undefined mimetype/servicetype "application/x-rocs"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/kde4/rocs.desktop" specifies undefined mimetype/servicetype "application/x-rocsz"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/kde4/lokalize.desktop" specifies undefined mimetype/servicetype "application/x-lokalize-project"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/kde4/kalgebramobile.desktop" specifies undefined mimetype/servicetype "application/x-kalgebra"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ServiceMenus/dragonplayer_play_dvd.desktop" specifies undefined mimetype/servicetype "media/dvdvideo"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "kerfuffle_libarchive_readonly.desktop" specifies undefined mimetype/servicetype "application/x-servicepack"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "application/x-smil"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "application/streamingmedia"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "application/x-streamingmedia"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "application/vnd.rn-realmedia-vbr"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "audio/x-aac"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "audio/m4a"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "audio/mp1"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "audio/x-mp1"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "audio/mpg"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "audio/x-mpg"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "audio/rn-mpeg"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "audio/scpls"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "audio/x-pn-windows-pcm"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "audio/x-realaudio"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "audio/x-pls"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "video/x-ms-afs"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/mplayer.desktop" specifies undefined mimetype/servicetype "video/x-ms-wvxvideo"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/kde4/ark.desktop" specifies undefined mimetype/servicetype "application/x-servicepack"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/kde4/ark.desktop" specifies undefined mimetype/servicetype "application/lha"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "/usr/share/applications/kde4/ark.desktop" specifies undefined mimetype/servicetype "application/maclha"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "ServiceMenus/imageconverter.desktop" specifies undefined mimetype/servicetype "image/*"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "plasma-kpart.desktop" specifies undefined mimetype/servicetype "KParts/Part"
+kbuildsycoca4(1152) KBuildServiceFactory::populateServiceTypes: "kfontviewpart.desktop" specifies undefined mimetype/servicetype "fonts/package"
+kbuildsycoca4(1152) KBuildSycoca::save: Saving
+kbuildsycoca4(1152) kdemain: Emitting notifyDatabaseChanged ("servicetypes", "xdgdata-mime", "services", "apps")
+kded(1136): Cannot open the rules file "/usr/share/X11/xkb/rules/xorg.extras.xml" 
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: name 'org.kde.kglobalaccel' had owner '' but we thought it was ':1.6'
+"/org/freedesktop/UDisks2/drives/Hitachi_HTS543216L9SA00_090420FB2201VCF0MYTA" : property "Drive" does not exist 
+"/org/freedesktop/UDisks2/drives/Generic__Multi_Card_20071114173400000" : property "Drive" does not exist 
+"/org/freedesktop/UDisks2/drives/Kingston_DT_101_G2_001CC07CEB39F081F91A136D" : property "Drive" does not exist 
+"/org/freedesktop/UDisks2/drives/Hitachi_HTS543216L9SA00_090420FB2201VCF0MYTA" : property "DeviceNumber" does not exist 
+"/org/freedesktop/UDisks2/drives/Hitachi_HTS543216L9SA00_090420FB2201VCF0MYTA" : property "Device" does not exist 
+"/org/freedesktop/UDisks2/drives/Generic__Multi_Card_20071114173400000" : property "DeviceNumber" does not exist 
+"/org/freedesktop/UDisks2/drives/Generic__Multi_Card_20071114173400000" : property "Device" does not exist 
+kded(1136)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+QDBusConnection: name 'org.freedesktop.UDisks2' had owner '' but we thought it was ':1.15'
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+kwin(1603) KWin::Extensions::init:  non_native_pixmaps:  true
+kwin(1603) KWin::Xcb::Extensions::init: Extensions: shape: 0x "11"  composite: 0x "4"  render: 0x "b"  fixes: 0x "50"  randr: 0x "14"  sync: 0x "31"  damage: 0x  "11"
+kwin(1603) KDecorationPlugins::canLoad: kwin : path  "/usr/lib/kde4/kwin3_oxygen.so"  for  "kwin3_oxygen"
+kwin(1603): ""fsrestore1" - conversion of "0,0,0,0" to QRect failed" 
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+QCoreApplication::sendPostedEvents: Cannot send posted events for objects in another thread
+QCoreApplication::sendPostedEvents: Cannot send posted events for objects in another thread
+QCoreApplication::sendPostedEvents: Cannot send posted events for objects in another thread
+QCoreApplication::sendPostedEvents: Cannot send posted events for objects in another thread
+kwin(1603) KWin::Compositor::slotCompositingOptionsInitialized: Initializing OpenGL compositing
+kwin(1603) KWin::GlxBackend::initDrawableConfigs: Drawable visual (depth  24 ): 0x "73"
+kwin(1603) KWin::GlxBackend::initDrawableConfigs: Drawable visual (depth  32 ): 0x "59"
+kwin(1603) KWin::GlxBackend::initBuffer: Buffer visual (depth  24 ): 0x "72"
+OpenGL vendor string:                   Intel Open Source Technology Center
+OpenGL renderer string:                 Mesa DRI Intel(R) 945GME x86/MMX/SSE2
+OpenGL version string:                  2.1 Mesa 9.2.0
+OpenGL shading language version string: 1.20
+Driver:                                 Intel
+GPU class:                              i915/i945
+OpenGL version:                         2.1
+GLSL version:                           1.20
+Mesa version:                           9.2
+X server version:                       1.14.3
+Linux kernel version:                   3.11.2
+Direct rendering:                       yes
+Requires strict binding:                no
+GLSL shaders:                           limited
+Texture NPOT support:                   yes
+Virtual Machine:                        no
+kwin(1603) KWin::GlxBackend::init: Direct rendering: true
+kwin(1603) KWin::SceneOpenGL2::supported: Driver does not recommend OpenGL 2 compositing
+kwin(1603) KWin::SceneOpenGL1::SceneOpenGL1: OpenGL 1 compositing successfully initialized
+kwin(1603) KWin::currentRefreshRate: Vertical Refresh rate  60 Hz
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_login"
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_slidingpopups"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_blur"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_translucency"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_desktopgrid"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_fade"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_slide"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_presentwindows"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_dashboard"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_kscreen"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_startupfeedback"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_dialogparent"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_screenedge"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_maximize"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_taskbarthumbnail"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_logout"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_screenshot"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_highlightwindow"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_zoom"
+kwin(1603) KWin::EffectsHandlerImpl::loadEffect: Trying to load  "kwin4_effect_minimizeanimation"
+kwin(1603) KWin::KscreenEffect::propertyNotify: Incorrect Property state, immediate stop:  161865728
+QDBusObjectPath: invalid path ""
+QDBusObjectPath: invalid path ""
+QGraphicsLinearLayout::insertItem: cannot insert null item
+plasma-desktop(1611)/libplasma Plasma::isPluginVersionCompatible: unversioned plugin detected, may result in instability 
+plasma-desktop(1611)/libplasma Plasma::isPluginVersionCompatible: unversioned plugin detected, may result in instability 
+plasma-desktop(1611)/libplasma Plasma::isPluginVersionCompatible: unversioned plugin detected, may result in instability 
+Connecting to deprecated signal QDBusConnectionInterface::serviceOwnerChanged(QString,QString,QString)
+QGraphicsLinearLayout::removeAt: invalid index 0
+========================>  4 0
+static bool QDeclarativeMetaType::isModule(const QByteArray&, int, int) Qt 4.7 import detected; please note that Qt 4.7 is directly reusable as QtQuick 1.x with no code changes. Continuing, but startup time will be slower. 
+plasma-desktop(1611)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+plasma-desktop(1611)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+"/org/freedesktop/UDisks2/drives/Hitachi_HTS543216L9SA00_090420FB2201VCF0MYTA" : property "Drive" does not exist 
+"/org/freedesktop/UDisks2/drives/Generic__Multi_Card_20071114173400000" : property "Drive" does not exist 
+"/org/freedesktop/UDisks2/drives/Kingston_DT_101_G2_001CC07CEB39F081F91A136D" : property "Drive" does not exist 
+"/org/freedesktop/UDisks2/drives/Kingston_DT_101_G2_001CC07CEB39F081F91A136D" : property "DeviceNumber" does not exist 
+"/org/freedesktop/UDisks2/drives/Kingston_DT_101_G2_001CC07CEB39F081F91A136D" : property "Device" does not exist 
+"/org/freedesktop/UDisks2/drives/Kingston_DT_101_G2_001CC07CEB39F081F91A136D" : property "Table" does not exist 
+"/org/freedesktop/UDisks2/drives/Hitachi_HTS543216L9SA00_090420FB2201VCF0MYTA" : property "DeviceNumber" does not exist 
+"/org/freedesktop/UDisks2/drives/Hitachi_HTS543216L9SA00_090420FB2201VCF0MYTA" : property "Device" does not exist 
+"/org/freedesktop/UDisks2/drives/Hitachi_HTS543216L9SA00_090420FB2201VCF0MYTA" : property "Table" does not exist 
+"/org/freedesktop/UDisks2/drives/Generic__Multi_Card_20071114173400000" : property "DeviceNumber" does not exist 
+"/org/freedesktop/UDisks2/drives/Generic__Multi_Card_20071114173400000" : property "Device" does not exist 
+"/org/freedesktop/UDisks2/drives/Generic__Multi_Card_20071114173400000" : property "Table" does not exist 
+file:///usr/lib/kde4/imports/org/kde/plasma/components/SectionScroller.qml:103: TypeError: Result of expression 'listView' [null] is not an object.
+file:///usr/lib/kde4/imports/org/kde/plasma/components/SectionScroller.qml:175: ReferenceError: Can't find variable: sectionsRepeater
+file:///usr/lib/kde4/imports/org/kde/plasma/components/SectionScroller.qml:103: Error: Cannot assign [undefined] to QString
+file:///usr/share/apps/plasma/plasmoids/notifier/contents/ui/devicenotifier.qml:224:13: QML QDeclarativeListView_QML_62: Possible anchor loop detected on fill.
+file:///usr/share/apps/plasma/plasmoids/notifier/contents/ui/devicenotifier.qml:224:13: QML QDeclarativeListView_QML_62: Possible anchor loop detected on fill.
+file:///usr/share/apps/plasma/plasmoids/notifier/contents/ui/devicenotifier.qml:224:13: QML QDeclarativeListView_QML_62: Possible anchor loop detected on fill.
+file:///usr/share/apps/plasma/plasmoids/notifier/contents/ui/devicenotifier.qml:224:13: QML QDeclarativeListView_QML_62: Possible anchor loop detected on fill.
+file:///usr/share/apps/plasma/plasmoids/notifier/contents/ui/devicenotifier.qml:224:13: QML QDeclarativeListView_QML_62: Possible anchor loop detected on fill.
+file:///usr/share/apps/plasma/plasmoids/notifier/contents/ui/devicenotifier.qml:224:13: QML QDeclarativeListView_QML_62: Possible anchor loop detected on fill.
+file:///usr/share/apps/plasma/plasmoids/notifier/contents/ui/devicenotifier.qml:224:13: QML QDeclarativeListView_QML_62: Possible anchor loop detected on fill.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+/tmp/kde-mesk/kcminitTi1164.tmp:498: error: Unterminated string literal, skipped the line
+    URxvt*cutchars:     "()*,<>[]{}|'
+1 error in preprocessor.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+link XMLID_34_ hasn't been detected!
+link XMLID_34_ hasn't been detected!
+link XMLID_36_ hasn't been detected!
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+QDBusConnection: session D-Bus connection created before QCoreApplication. Application may misbehave.
+kded(1136)/Network Management (NetworkManager backend) ConnectionDbus::fromDbusMap: Setting  "ipv4" not initialized 
+kded(1136)/Network Management (NetworkManager backend) ConnectionDbus::fromDbusMap: Setting  "ipv6" not initialized 
+kded(1136)/Network Management (NetworkManager backend) ConnectionDbus::fromDbusMap: Setting  "802-1x" not initialized 
+Connecting to deprecated signal QDBusConnectionInterface::serviceOwnerChanged(QString,QString,QString)
+link XMLID_34_ hasn't been detected!
+link XMLID_34_ hasn't been detected!
+link XMLID_36_ hasn't been detected!
+plasma-desktop(1611)/libakonadi Akonadi::AgentManagerPrivate::createDBusInterface: AgentManager failed to get a valid AgentManager DBus interface. Error is: 1 "org.freedesktop.DBus.Error.NameHasNoOwner" "Could not get owner of name 'org.freedesktop.Akonadi.Control': no such name" 
+Connecting to deprecated signal QDBusConnectionInterface::serviceOwnerChanged(QString,QString,QString)
+plasma-desktop(1611)/libakonadi Akonadi::SessionPrivate::socketError: Socket error occurred: "QLocalSocket::connectToServer: Invalid name" 
+plasma-desktop(1611)/libakonadi Akonadi::SessionPrivate::socketError: Socket error occurred: "QLocalSocket::connectToServer: Invalid name" 
+search paths:  ("/usr/local/sbin", "/usr/local/bin", "/usr/bin", "/usr/bin/core_perl", "/usr/sbin", "/usr/local/sbin", "/usr/local/libexec", "/usr/libexec", "/opt/mysql/libexec", "/opt/local/lib/mysql5/bin", "/opt/mysql/sbin") 
+kwin(1603) KWin::Client::readUserTimeMapTimestamp: User timestamp, ASN: 4294967295
+kwin(1603) KWin::Client::readUserTimeMapTimestamp: User timestamp, final: 'ID: 27263364 ;WMCLASS: "plasma" : "plasma" ;Caption: "plasma-desktop" ' : 136797
+kwin(1603) KWin::Workspace::allowClientActivation: Activation: No client active, allowing
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+kwin(1603) KWin::Client::readUserTimeMapTimestamp: User timestamp, ASN: 4294967295
+kwin(1603) KWin::Client::readUserTimeMapTimestamp: User timestamp, final: 'ID: 27263373 ;WMCLASS: "plasma" : "plasma" ;Caption: "plasma-desktop" ' : 146349
+kwin(1603) KWin::Workspace::allowClientActivation: Activation: No client active, allowing
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+QSqlDatabasePrivate::removeDatabase: connection 'initConnection' is still in use, all queries will cease to work.
+Database error: Cannot open database.
+Last driver error: "QMYSQL: Unable to connect"
+Last database error: "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2)"
+QSqlQuery::exec: database not open
+Unable to open database "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2) QMYSQL: Unable to connect"
+"[
+0: akonadiserver(_Z11akBacktracev+0x35) [0x808fe95]
+1: akonadiserver() [0x8090140]
+2: linux-gate.so.1(__kernel_sigreturn+0) [0xb7731400]
+3: linux-gate.so.1(__kernel_vsyscall+0x10) [0xb7731424]
+4: /usr/lib/libc.so.6(gsignal+0x46) [0xb6db34c6]
+5: /usr/lib/libc.so.6(abort+0x143) [0xb6db4c53]
+6: /usr/lib/libQtCore.so.4(_Z17qt_message_output9QtMsgTypePKc+0x75) [0xb7480875]
+7: akonadiserver(_ZN15FileDebugStream9writeDataEPKcx+0xc4) [0x8092224]
+8: /usr/lib/libQtCore.so.4(_ZN9QIODevice5writeEPKcx+0xc8) [0xb75251a8]
+9: /usr/lib/libQtCore.so.4(+0x10e39e) [0xb753339e]
+10: /usr/lib/libQtCore.so.4(_ZN11QTextStreamD1Ev+0x35) [0xb753ca95]
+11: akonadiserver(_ZN7Akonadi13AkonadiServerC1EP7QObject+0x590) [0x8094f40]
+12: akonadiserver(_ZN7Akonadi13AkonadiServer8instanceEv+0x33) [0x8096253]
+13: akonadiserver(main+0x1c7) [0x8087e57]
+14: /usr/lib/libc.so.6(__libc_start_main+0xf3) [0xb6d9e9d3]
+15: akonadiserver() [0x80887b5]
+]
+"
+ProcessControl: Application 'akonadiserver' returned with exit code 255 (Unknown error)
+search paths:  ("/usr/local/sbin", "/usr/local/bin", "/usr/bin", "/usr/bin/core_perl", "/usr/sbin", "/usr/local/sbin", "/usr/local/libexec", "/usr/libexec", "/opt/mysql/libexec", "/opt/local/lib/mysql5/bin", "/opt/mysql/sbin") 
+QSqlDatabasePrivate::removeDatabase: connection 'initConnection' is still in use, all queries will cease to work.
+Database error: Cannot open database.
+Last driver error: "QMYSQL: Unable to connect"
+Last database error: "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2)"
+QSqlQuery::exec: database not open
+Unable to open database "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2) QMYSQL: Unable to connect"
+"[
+0: akonadiserver(_Z11akBacktracev+0x35) [0x808fe95]
+1: akonadiserver() [0x8090140]
+2: linux-gate.so.1(__kernel_sigreturn+0) [0xb7794400]
+3: linux-gate.so.1(__kernel_vsyscall+0x10) [0xb7794424]
+4: /usr/lib/libc.so.6(gsignal+0x46) [0xb6e164c6]
+5: /usr/lib/libc.so.6(abort+0x143) [0xb6e17c53]
+6: /usr/lib/libQtCore.so.4(_Z17qt_message_output9QtMsgTypePKc+0x75) [0xb74e3875]
+7: akonadiserver(_ZN15FileDebugStream9writeDataEPKcx+0xc4) [0x8092224]
+8: /usr/lib/libQtCore.so.4(_ZN9QIODevice5writeEPKcx+0xc8) [0xb75881a8]
+9: /usr/lib/libQtCore.so.4(+0x10e39e) [0xb759639e]
+10: /usr/lib/libQtCore.so.4(_ZN11QTextStreamD1Ev+0x35) [0xb759fa95]
+11: akonadiserver(_ZN7Akonadi13AkonadiServerC1EP7QObject+0x590) [0x8094f40]
+12: akonadiserver(_ZN7Akonadi13AkonadiServer8instanceEv+0x33) [0x8096253]
+13: akonadiserver(main+0x1c7) [0x8087e57]
+14: /usr/lib/libc.so.6(__libc_start_main+0xf3) [0xb6e019d3]
+15: akonadiserver() [0x80887b5]
+]
+"
+ProcessControl: Application 'akonadiserver' returned with exit code 255 (Unknown error)
+search paths:  ("/usr/local/sbin", "/usr/local/bin", "/usr/bin", "/usr/bin/core_perl", "/usr/sbin", "/usr/local/sbin", "/usr/local/libexec", "/usr/libexec", "/opt/mysql/libexec", "/opt/local/lib/mysql5/bin", "/opt/mysql/sbin") 
+QSqlDatabasePrivate::removeDatabase: connection 'initConnection' is still in use, all queries will cease to work.
+Database error: Cannot open database.
+Last driver error: "QMYSQL: Unable to connect"
+Last database error: "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2)"
+QSqlQuery::exec: database not open
+Unable to open database "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2) QMYSQL: Unable to connect"
+"[
+0: akonadiserver(_Z11akBacktracev+0x35) [0x808fe95]
+1: akonadiserver() [0x8090140]
+2: linux-gate.so.1(__kernel_sigreturn+0) [0xb76e9400]
+3: linux-gate.so.1(__kernel_vsyscall+0x10) [0xb76e9424]
+4: /usr/lib/libc.so.6(gsignal+0x46) [0xb6d6b4c6]
+5: /usr/lib/libc.so.6(abort+0x143) [0xb6d6cc53]
+6: /usr/lib/libQtCore.so.4(_Z17qt_message_output9QtMsgTypePKc+0x75) [0xb7438875]
+7: akonadiserver(_ZN15FileDebugStream9writeDataEPKcx+0xc4) [0x8092224]
+8: /usr/lib/libQtCore.so.4(_ZN9QIODevice5writeEPKcx+0xc8) [0xb74dd1a8]
+9: /usr/lib/libQtCore.so.4(+0x10e39e) [0xb74eb39e]
+10: /usr/lib/libQtCore.so.4(_ZN11QTextStreamD1Ev+0x35) [0xb74f4a95]
+11: akonadiserver(_ZN7Akonadi13AkonadiServerC1EP7QObject+0x590) [0x8094f40]
+12: akonadiserver(_ZN7Akonadi13AkonadiServer8instanceEv+0x33) [0x8096253]
+13: akonadiserver(main+0x1c7) [0x8087e57]
+14: /usr/lib/libc.so.6(__libc_start_main+0xf3) [0xb6d569d3]
+15: akonadiserver() [0x80887b5]
+]
+"
+ProcessControl: Application 'akonadiserver' returned with exit code 255 (Unknown error)
+search paths:  ("/usr/local/sbin", "/usr/local/bin", "/usr/bin", "/usr/bin/core_perl", "/usr/sbin", "/usr/local/sbin", "/usr/local/libexec", "/usr/libexec", "/opt/mysql/libexec", "/opt/local/lib/mysql5/bin", "/opt/mysql/sbin") 
+QSqlDatabasePrivate::removeDatabase: connection 'initConnection' is still in use, all queries will cease to work.
+Database error: Cannot open database.
+Last driver error: "QMYSQL: Unable to connect"
+Last database error: "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2)"
+QSqlQuery::exec: database not open
+Unable to open database "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2) QMYSQL: Unable to connect"
+"[
+0: akonadiserver(_Z11akBacktracev+0x35) [0x808fe95]
+1: akonadiserver() [0x8090140]
+2: linux-gate.so.1(__kernel_sigreturn+0) [0xb7767400]
+3: linux-gate.so.1(__kernel_vsyscall+0x10) [0xb7767424]
+4: /usr/lib/libc.so.6(gsignal+0x46) [0xb6de94c6]
+5: /usr/lib/libc.so.6(abort+0x143) [0xb6deac53]
+6: /usr/lib/libQtCore.so.4(_Z17qt_message_output9QtMsgTypePKc+0x75) [0xb74b6875]
+7: akonadiserver(_ZN15FileDebugStream9writeDataEPKcx+0xc4) [0x8092224]
+8: /usr/lib/libQtCore.so.4(_ZN9QIODevice5writeEPKcx+0xc8) [0xb755b1a8]
+9: /usr/lib/libQtCore.so.4(+0x10e39e) [0xb756939e]
+10: /usr/lib/libQtCore.so.4(_ZN11QTextStreamD1Ev+0x35) [0xb7572a95]
+11: akonadiserver(_ZN7Akonadi13AkonadiServerC1EP7QObject+0x590) [0x8094f40]
+12: akonadiserver(_ZN7Akonadi13AkonadiServer8instanceEv+0x33) [0x8096253]
+13: akonadiserver(main+0x1c7) [0x8087e57]
+14: /usr/lib/libc.so.6(__libc_start_main+0xf3) [0xb6dd49d3]
+15: akonadiserver() [0x80887b5]
+]
+"
+ProcessControl: Application 'akonadiserver' returned with exit code 255 (Unknown error)
+"akonadiserver" crashed too often and will not be restarted! 
+kwin(1603) KWin::Client::configureRequest: KWin::Client(0x9cff7b0) true false false
+kwin(1603) KWin::Client::configureRequest: PERMITTED 'ID: 27263364 ;WMCLASS: "plasma" : "plasma" ;Caption: "plasma-desktop" ' true
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+kwin(1603) KWin::Client::configureRequest: KWin::Client(0x9cff7b0) true false false
+kwin(1603) KWin::Client::configureRequest: PERMITTED 'ID: 27263364 ;WMCLASS: "plasma" : "plasma" ;Caption: "plasma-desktop" ' true
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+kwin(1603) KWin::Client::configureRequest: KWin::Client(0x9cff7b0) true false false
+kwin(1603) KWin::Client::configureRequest: PERMITTED 'ID: 27263364 ;WMCLASS: "plasma" : "plasma" ;Caption: "plasma-desktop" ' true
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+QGridLayoutEngine::addItem: Cell (0, 1) already taken
+QGridLayoutEngine::addItem: Cell (0, 1) already taken
+ksmserver(1462)/kdeui (KNotification) KNotification::slotReceivedIdError: Error while contacting notify daemon "Did not receive a reply. Possible causes include: the remote application did not send a reply, the message bus security policy blocked the reply, the reply timeout expired, or the network connection was broken." 
+QGridLayoutEngine::addItem: Cell (0, 1) already taken
+QGridLayoutEngine::addItem: Cell (0, 1) already taken
+QGridLayoutEngine::addItem: Cell (0, 1) already taken
+New PolkitAgentListener  0x820e990 
+Adding new listener  PolkitQt1::Agent::Listener(0x8326908) for  0x820e990 
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+"/" : property "Vendor" does not exist 
+"/" : property "Model" does not exist 
+"/org/freedesktop/UDisks2/block_devices/loop0" : property "Name" does not exist 
+krunner(1650)/libakonadi Akonadi::AgentManagerPrivate::createDBusInterface: AgentManager failed to get a valid AgentManager DBus interface. Error is: 1 "org.freedesktop.DBus.Error.NameHasNoOwner" "Could not get owner of name 'org.freedesktop.Akonadi.Control': no such name" 
+krunner(1650)/libakonadi Akonadi::SessionPrivate::socketError: Socket error occurred: "QLocalSocket::connectToServer: Connection refused" 
+Connecting to deprecated signal QDBusConnectionInterface::serviceOwnerChanged(QString,QString,QString)
+search paths:  ("/usr/local/sbin", "/usr/local/bin", "/usr/bin", "/usr/bin/core_perl", "/usr/sbin", "/usr/local/sbin", "/usr/local/libexec", "/usr/libexec", "/opt/mysql/libexec", "/opt/local/lib/mysql5/bin", "/opt/mysql/sbin") 
+krunner(1650)/kio (KDirWatch) KDirWatchPrivate::removeEntry: doesn't know "/home/mesk/.kde4/share/apps/kabc" 
+QSqlDatabasePrivate::removeDatabase: connection 'initConnection' is still in use, all queries will cease to work.
+Database error: Cannot open database.
+Last driver error: "QMYSQL: Unable to connect"
+Last database error: "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2)"
+QSqlQuery::exec: database not open
+Unable to open database "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2) QMYSQL: Unable to connect"
+"[
+0: akonadiserver(_Z11akBacktracev+0x35) [0x808fe95]
+1: akonadiserver() [0x8090140]
+2: linux-gate.so.1(__kernel_sigreturn+0) [0xb774f400]
+3: linux-gate.so.1(__kernel_vsyscall+0x10) [0xb774f424]
+4: /usr/lib/libc.so.6(gsignal+0x46) [0xb6dd14c6]
+5: /usr/lib/libc.so.6(abort+0x143) [0xb6dd2c53]
+6: /usr/lib/libQtCore.so.4(_Z17qt_message_output9QtMsgTypePKc+0x75) [0xb749e875]
+7: akonadiserver(_ZN15FileDebugStream9writeDataEPKcx+0xc4) [0x8092224]
+8: /usr/lib/libQtCore.so.4(_ZN9QIODevice5writeEPKcx+0xc8) [0xb75431a8]
+9: /usr/lib/libQtCore.so.4(+0x10e39e) [0xb755139e]
+10: /usr/lib/libQtCore.so.4(_ZN11QTextStreamD1Ev+0x35) [0xb755aa95]
+11: akonadiserver(_ZN7Akonadi13AkonadiServerC1EP7QObject+0x590) [0x8094f40]
+12: akonadiserver(_ZN7Akonadi13AkonadiServer8instanceEv+0x33) [0x8096253]
+13: akonadiserver(main+0x1c7) [0x8087e57]
+14: /usr/lib/libc.so.6(__libc_start_main+0xf3) [0xb6dbc9d3]
+15: akonadiserver() [0x80887b5]
+]
+"
+ProcessControl: Application 'akonadiserver' returned with exit code 255 (Unknown error)
+search paths:  ("/usr/local/sbin", "/usr/local/bin", "/usr/bin", "/usr/bin/core_perl", "/usr/sbin", "/usr/local/sbin", "/usr/local/libexec", "/usr/libexec", "/opt/mysql/libexec", "/opt/local/lib/mysql5/bin", "/opt/mysql/sbin") 
+QSqlDatabasePrivate::removeDatabase: connection 'initConnection' is still in use, all queries will cease to work.
+Database error: Cannot open database.
+Last driver error: "QMYSQL: Unable to connect"
+Last database error: "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2)"
+QSqlQuery::exec: database not open
+Unable to open database "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2) QMYSQL: Unable to connect"
+"[
+0: akonadiserver(_Z11akBacktracev+0x35) [0x808fe95]
+1: akonadiserver() [0x8090140]
+2: linux-gate.so.1(__kernel_sigreturn+0) [0xb776e400]
+3: linux-gate.so.1(__kernel_vsyscall+0x10) [0xb776e424]
+4: /usr/lib/libc.so.6(gsignal+0x46) [0xb6df04c6]
+5: /usr/lib/libc.so.6(abort+0x143) [0xb6df1c53]
+6: /usr/lib/libQtCore.so.4(_Z17qt_message_output9QtMsgTypePKc+0x75) [0xb74bd875]
+7: akonadiserver(_ZN15FileDebugStream9writeDataEPKcx+0xc4) [0x8092224]
+8: /usr/lib/libQtCore.so.4(_ZN9QIODevice5writeEPKcx+0xc8) [0xb75621a8]
+9: /usr/lib/libQtCore.so.4(+0x10e39e) [0xb757039e]
+10: /usr/lib/libQtCore.so.4(_ZN11QTextStreamD1Ev+0x35) [0xb7579a95]
+11: akonadiserver(_ZN7Akonadi13AkonadiServerC1EP7QObject+0x590) [0x8094f40]
+12: akonadiserver(_ZN7Akonadi13AkonadiServer8instanceEv+0x33) [0x8096253]
+13: akonadiserver(main+0x1c7) [0x8087e57]
+14: /usr/lib/libc.so.6(__libc_start_main+0xf3) [0xb6ddb9d3]
+15: akonadiserver() [0x80887b5]
+]
+"
+ProcessControl: Application 'akonadiserver' returned with exit code 255 (Unknown error)
+search paths:  ("/usr/local/sbin", "/usr/local/bin", "/usr/bin", "/usr/bin/core_perl", "/usr/sbin", "/usr/local/sbin", "/usr/local/libexec", "/usr/libexec", "/opt/mysql/libexec", "/opt/local/lib/mysql5/bin", "/opt/mysql/sbin") 
+QSqlDatabasePrivate::removeDatabase: connection 'initConnection' is still in use, all queries will cease to work.
+Database error: Cannot open database.
+Last driver error: "QMYSQL: Unable to connect"
+Last database error: "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2)"
+QSqlQuery::exec: database not open
+Unable to open database "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2) QMYSQL: Unable to connect"
+"[
+0: akonadiserver(_Z11akBacktracev+0x35) [0x808fe95]
+1: akonadiserver() [0x8090140]
+2: linux-gate.so.1(__kernel_sigreturn+0) [0xb7716400]
+3: linux-gate.so.1(__kernel_vsyscall+0x10) [0xb7716424]
+4: /usr/lib/libc.so.6(gsignal+0x46) [0xb6d984c6]
+5: /usr/lib/libc.so.6(abort+0x143) [0xb6d99c53]
+6: /usr/lib/libQtCore.so.4(_Z17qt_message_output9QtMsgTypePKc+0x75) [0xb7465875]
+7: akonadiserver(_ZN15FileDebugStream9writeDataEPKcx+0xc4) [0x8092224]
+8: /usr/lib/libQtCore.so.4(_ZN9QIODevice5writeEPKcx+0xc8) [0xb750a1a8]
+9: /usr/lib/libQtCore.so.4(+0x10e39e) [0xb751839e]
+10: /usr/lib/libQtCore.so.4(_ZN11QTextStreamD1Ev+0x35) [0xb7521a95]
+11: akonadiserver(_ZN7Akonadi13AkonadiServerC1EP7QObject+0x590) [0x8094f40]
+12: akonadiserver(_ZN7Akonadi13AkonadiServer8instanceEv+0x33) [0x8096253]
+13: akonadiserver(main+0x1c7) [0x8087e57]
+14: /usr/lib/libc.so.6(__libc_start_main+0xf3) [0xb6d839d3]
+15: akonadiserver() [0x80887b5]
+]
+"
+ProcessControl: Application 'akonadiserver' returned with exit code 255 (Unknown error)
+search paths:  ("/usr/local/sbin", "/usr/local/bin", "/usr/bin", "/usr/bin/core_perl", "/usr/sbin", "/usr/local/sbin", "/usr/local/libexec", "/usr/libexec", "/opt/mysql/libexec", "/opt/local/lib/mysql5/bin", "/opt/mysql/sbin") 
+QSqlDatabasePrivate::removeDatabase: connection 'initConnection' is still in use, all queries will cease to work.
+Database error: Cannot open database.
+Last driver error: "QMYSQL: Unable to connect"
+Last database error: "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2)"
+QSqlQuery::exec: database not open
+Unable to open database "Can't connect to local MySQL server through socket '/home/mesk/.local/share/akonadi/socket-MeskLinux/mysql.socket' (2) QMYSQL: Unable to connect"
+"[
+0: akonadiserver(_Z11akBacktracev+0x35) [0x808fe95]
+1: akonadiserver() [0x8090140]
+2: linux-gate.so.1(__kernel_sigreturn+0) [0xb773d400]
+3: linux-gate.so.1(__kernel_vsyscall+0x10) [0xb773d424]
+4: /usr/lib/libc.so.6(gsignal+0x46) [0xb6dbf4c6]
+5: /usr/lib/libc.so.6(abort+0x143) [0xb6dc0c53]
+6: /usr/lib/libQtCore.so.4(_Z17qt_message_output9QtMsgTypePKc+0x75) [0xb748c875]
+7: akonadiserver(_ZN15FileDebugStream9writeDataEPKcx+0xc4) [0x8092224]
+8: /usr/lib/libQtCore.so.4(_ZN9QIODevice5writeEPKcx+0xc8) [0xb75311a8]
+9: /usr/lib/libQtCore.so.4(+0x10e39e) [0xb753f39e]
+10: /usr/lib/libQtCore.so.4(_ZN11QTextStreamD1Ev+0x35) [0xb7548a95]
+11: akonadiserver(_ZN7Akonadi13AkonadiServerC1EP7QObject+0x590) [0x8094f40]
+12: akonadiserver(_ZN7Akonadi13AkonadiServer8instanceEv+0x33) [0x8096253]
+13: akonadiserver(main+0x1c7) [0x8087e57]
+14: /usr/lib/libc.so.6(__libc_start_main+0xf3) [0xb6daa9d3]
+15: akonadiserver() [0x80887b5]
+]
+"
+ProcessControl: Application 'akonadiserver' returned with exit code 255 (Unknown error)
+"akonadiserver" crashed too often and will not be restarted! 
+kwin(1603) KWin::Client::readUserTimeMapTimestamp: User timestamp, ASN: 4294967295
+kwin(1603) KWin::Client::readUserTimeMapTimestamp: User timestamp, final: 'ID: 27263390 ;WMCLASS: "plasma-desktop" : "plasma-desktop" ;Caption: "plasma-desktop" ' : 146531
+kwin(1603) KWin::Workspace::allowClientActivation: Activation: No client active, allowing
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+"/org/freedesktop/UDisks2/block_devices/loop1" : property "Name" does not exist 
+"/org/freedesktop/UDisks2/drives/Hitachi_HTS543216L9SA00_090420FB2201VCF0MYTA" : property "Drive" does not exist 
+"/org/freedesktop/UDisks2/drives/Generic__Multi_Card_20071114173400000" : property "Drive" does not exist 
+"/org/freedesktop/UDisks2/drives/Kingston_DT_101_G2_001CC07CEB39F081F91A136D" : property "Drive" does not exist 
+"/org/freedesktop/UDisks2/drives/Generic__Multi_Card_20071114173400000" : property "DeviceNumber" does not exist 
+"/org/freedesktop/UDisks2/drives/Generic__Multi_Card_20071114173400000" : property "Device" does not exist 
+I/O warning : failed to load external entity "/home/mesk/.qalculate/eurofxref-daily.xml"
+I/O warning : failed to load external entity "/home/mesk/.qalculate/eurofxref-daily.xml"
+"/org/freedesktop/UDisks2/drives/Kingston_DT_101_G2_001CC07CEB39F081F91A136D" : property "DeviceNumber" does not exist 
+"/org/freedesktop/UDisks2/drives/Kingston_DT_101_G2_001CC07CEB39F081F91A136D" : property "Device" does not exist 
+"/" : property "Vendor" does not exist 
+"/" : property "Model" does not exist 
+"/org/freedesktop/UDisks2/block_devices/loop0" : property "Name" does not exist 
+"/org/freedesktop/UDisks2/drives/Hitachi_HTS543216L9SA00_090420FB2201VCF0MYTA" : property "DeviceNumber" does not exist 
+"/org/freedesktop/UDisks2/drives/Hitachi_HTS543216L9SA00_090420FB2201VCF0MYTA" : property "Device" does not exist 
+"/org/freedesktop/UDisks2/block_devices/loop1" : property "Name" does not exist 
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+kwin(1603) KWin::Client::readUserTimeMapTimestamp: User timestamp, ASN: 267988
+kwin(1603) KWin::Client::readUserTimeMapTimestamp: User timestamp, final: 'ID: 27263131 ;WMCLASS: "plasma-desktop" : "plasma-desktop" ;Caption: "plasma-desktop" ' : 267988
+kwin(1603) KWin::Workspace::allowClientActivation: Activation: No client active, allowing
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.
+kwin(1603) KWin::Workspace::updateClientArea: screens:  1 desktops:  2
+kwin(1603) KWin::Workspace::updateClientArea: Done.

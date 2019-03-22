@@ -1,0 +1,17 @@
+#!/sbin/runscript
+
+depend()
+{
+before *
+}
+
+start()
+{
+#echo "KEYMAP ${testv}"
+#echo "KEYMAP ${vara}"
+
+#ebegin "country is $country locale is $locale"
+#echo "" > /libexec/rc/sh/gendepends.sh
+:
+}
+

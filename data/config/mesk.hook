@@ -1,0 +1,124 @@
+
+mesk_mount_handler()
+{
+# exit 1
+:
+}
+
+run_hook ()
+{
+
+ID="MESKLIVE"
+TMP_MOUNT="/mnt"
+
+if [ ! -d ${TMP_MOUNT} ]
+then
+	mkdir -p ${TMP_MOUNT}
+fi
+
+# Detecting the live CD is a very logical process
+
+#mount proc and sysfs
+
+mkdir -p /proc
+mount proc /proc
+mount -t sysfs /sys
+                                                                      
+# Search for cdrom devices and add them to CDROM_LIST
+echo "detecting cdrom devices..."
+for I in `find /proc/sys/dev/cdrom | xargs grep -s  "drive name" | awk '{ print $3 }'`
+  do CDROM_LIST="$CDROM_LIST /dev/$I"
+done
+
+# Now we try to find the livecd using ID as identification
+                                                                                
+LIVE_DEVICE=""
+
+for cdrom_device in $CDROM_LIST
+do
+  mount -n -t iso9660 ${cdrom_device} $TMP_MOUNT
+  media_found=$?
+  if [ $media_found -eq 0 ]; then
+      echo -n "media found"
+      [ -e "$TMP_MOUNT/$ID" ]
+      media_live=$?
+      if [ $media_live -eq 0 ]; then
+      echo -n ". Livecd found."
+      LIVE_DEVICE="$cdrom_device"
+      break;
+      else
+      echo ". Not livecd."
+      umount -n $TMP_MOUNT
+      fi
+  else
+    echo "no media found"
+  fi
+done
+
+if [ "$LIVE_DEVICE" = "" ]; then
+  echo "No livecd found!!!"
+  exit 1
+fi
+#else
+#  echo " Booting from $LIVE_DEVICE..."
+#
+#  echo 0x0100 > /proc/sys/kernel/real-root-dev
+#  cd $TMP_MOUNT
+#  pivot_root . mnt
+#  exec chroot . sh -c 'umount -l -n /mnt;
+#   exec -a init.new /sbin/init 3' <dev/console >dev/console 2>&1
+#fi
+#EOF
+#chmod 0755 $LIVECD/mnt/linuxrc &&
+#cd $LIVECD/ &&
+#umount $LIVECD/mnt &&
+#gzip $LIVECD/boot/initrd &&
+#touch $LIVECD/livecd
+
+
+mkdir /rootfs
+mkdir -p /rwdir/etc/
+
+touch /run/initramfs/root-fsck
+
+modprobe squashfs
+
+
+mount -t tmpfs /rwdir /rwdir
+
+echo 'HOSTNAME="MESK"' > /rwdir/etc/rc.conf
+
+mount -t squashfs /mnt/mesk.sfs /rootfs/ -o loop
+#mount -t squashfs /mnt/meskoverlay.sfs /overlay/ -o loop
+
+#/usr/bin/unionfs  -o dirs=/=rw:/rootfs=ro /new_root -o nonempty
+/usr/bin/unionfs  -o dirs=/rwdir=RW:/rootfs=RO /new_root -o allow_other,use_ino,suid,dev,nonempty,cow
+#/usr/bin/unionfs  -o dirs=/overlay=ro /new_root -o nonempty
+
+
+#for loop in loop[0..99]
+#do
+#	if [ ! -e /dev/$loop ]
+#	then
+#		losetup  /dev/$loop /mnt/mesk.sfs
+#		root="/dev/${$loop}"
+#		break
+#	fi
+#done
+
+#for loop in $(seq 0 99)
+#do
+#	if [ ! -e "/dev/loop$loop" ]
+#	then
+#		losetup   "/dev/loop$loop" /mnt/mesk.sfs
+#		 root="/dev/loop$loop"
+#		break
+#	fi
+#done
+
+##losetup  /dev/loop1 /mnt/mesk.sfs
+##root="/dev/loop1"
+root=${cdrom_device}
+#ro=n
+mount_handler="mesk_mount_handler"
+}

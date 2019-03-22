@@ -1,0 +1,28 @@
+
+if grep installer=true /proc/cmdline
+then
+#	echo "xinit /sbin/mesk-installer" > /sbin/start
+#	xinit /sbin/mesk-installer &
+	systemctl start mesk-installer.service
+else
+	systemctl -f disable multi-user.target
+	systemctl -f enable graphical.target
+	if [ -e /usr/lib/systemd/system/kdm.service ]
+	then
+		systemctl -f enable kdm.service graphical.target
+	elif [ -e /usr/lib/systemd/system/gdm.service ]
+	then
+		systemctl -f enable gdm.service graphical.target
+	elif [ -e /usr/lib/systemd/system/lxdm.service ]
+	then
+		systemctl -f enable lxdm.service graphical.target
+	fi
+
+#	echo "xinit /usr/bin/kdm" > /sbin/start
+#	xinit /usr/bin/kdm
+	systemctl start kdm.service
+fi
+
+#chmod +x /sbin/start
+#/sbin/start &
+

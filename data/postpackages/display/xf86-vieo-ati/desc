@@ -1,0 +1,13 @@
+The xf86-video-ati (radeon) driver:
+
+    Works with Radeon chipsets up to HD 6xxx and 7xxxM (latest Northern Islands chipsets).
+        Radeons up to the X1xxx series are fully supported, stable, and full 2D and 3D acceleration are 
+provided.
+        Radeons from HD 2xxx to HD 6xxx have full 2D acceleration and functional 3D acceleration, but are not 
+supported by all the features that the proprietary driver provides (for example, powersaving is still in a 
+testing phase). 
+    Supports DRI1, RandR 1.2/1.3, EXA acceleration and kernel mode-setting/DRI2 (with the latest Linux kernel, 
+libdrm and Mesa versions). 
+
+Generally, xf86-video-ati should be your first choice, no matter which ATI card you own. In case you need to 
+use a driver for newer ATI cards, you should prefer the proprietary catalyst driver. 

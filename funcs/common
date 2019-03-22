@@ -1,0 +1,32 @@
+# By Abdallah Aly 2010
+# By Abdallah Aly 2011
+
+downloadFile()
+{
+wget "$1" &
+count=$(ps a | grep "$1"| wc -l)
+
+while [ $count != 1 ]
+do
+	$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --infobox "$2" 20 70
+	sleep 1
+	
+	count=$(ps a | grep "$1"| wc -l)
+done
+
+}
+
+executeCommand()
+{
+$1 &
+
+count=$(ps a | grep "$1"| wc -l)
+
+while [ $count != 1 ]
+do
+	$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --infobox "$2" 20 70
+	sleep 1
+	
+	count=$(ps a | grep "$1"| wc -l)
+done
+}

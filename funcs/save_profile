@@ -1,0 +1,42 @@
+# Profiler menu
+# By Abdallah Aly 2010
+
+save_profile ()
+{
+
+if [ ! -d $profilesdir/$profile_name ]
+then
+	mkdir $profilesdir/$profile_name
+fi
+
+echo "profile_name=\"${profile_name}\"" > $profilesdir/$profile_name/info
+echo "profile_desc=\"${profile_desc}\"" >> $profilesdir/$profile_name/info
+echo "workdir=\"$workdirr\"" >> $profilesdir/$profile_name/info
+echo "license=\"$license\"" >> $profilesdir/$profile_name/info
+echo "cd_label=\"${cd_label}\"" >> $profilesdir/$profile_name/info
+echo "iso_name=\"${iso_name}\"" >> $profilesdir/$profile_name/info
+echo "author=\"$author\"" >> $profilesdir/$profile_name/info
+echo "pkgcache=\"$pkgcache\"" >> $profilesdir/$profile_name/info
+echo "pkglist=\"$pkglist\"" >> $profilesdir/$profile_name/info
+echo "ignoredpkglist=\"$ignoredpkglist\"" >> $profilesdir/$profile_name/info
+echo "pkgsgrps=\"$pkgsgrps\"" >> $profilesdir/$profile_name/info
+
+#pkgsgrps
+#pkglist
+
+#WORKDIR=".working-${ARCH}"
+#DATE=$(date +%F)
+#CDNAME="Mesk Linux ISO"
+#ISONAME="$CDNAME-${DATE}-${ARCH}.iso"
+#ROOT_MOD=""
+#MOVE_MODULES="ap.010.xlibs ap.011.xapps"
+#MODULES="a.000.kernel a.001.core a.002.xorg a.003.xfce a.004.firefox a.005.libs a.006.apps a.007.devel a.008.java a.009.games ${MOVE_MODULES}"
+#DELDIR=""
+#KERNEL="/etc/mkinitcpio.d/kernel26.kver"
+#VMLINUZ="boot/vmlinuz26"
+#CDLABEL=""
+#PUBLISHER="http://mesklinux.org"
+#AUTHOR="Abdallah Aly"
+#NOLZMA="n"
+
+}

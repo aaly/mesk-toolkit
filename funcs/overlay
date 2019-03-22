@@ -1,0 +1,94 @@
+# Overlay selector and checker
+# By Abdallah Aly 2010
+
+edit_file()
+{
+	# $1 is file to edit
+	
+	$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --inputbox "please edit the overlay directory :" 20 70 "$OVERLAYFULLDIR" 2> /tmp/menuchoice.$$
+	OVERLAYDIR="$(cat /tmp/menuchoice.$$)"
+}
+
+overlay ()
+{
+
+TITLE="Overlay Settings"
+
+if [ ! -z $OVERLAYDIR ]
+then
+	OVERLAYFULLDIR="${currdir}/${profilesdir}/${PROFILE_NAME}/${OVERLAYDIR}"
+fi
+
+while true
+do
+
+	$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --menu "Overlay Editing menu" 20 70 20 \
+	"Overlay_Directory"	"Specify the overlay directory for editing" \
+	"rc.conf"	"edit rc.conf file" \
+	"mkinitcpio.conf"	"edit hooks in mkinitcpio.conf" \
+	"inittab"	"edit inittab" \
+	"issue"	"the VC header" \
+	"rc.local"	"edit functions in rc.local" \
+	"xorg.conf"	"config xorg.conf" \
+	"passwd"	"change passwd" \
+	"hosts.allow"	"edit hosts.allow" \
+	"sudoers"	"edit sudoers" \
+	"motd"	"Message of the day" \
+	"Done" "Done configuring profile !" 2> /tmp/menuchoice.$$
+
+	case $? in
+
+		1)
+		return 1;;
+		255)
+		return 255;;
+	esac
+
+	case "$(cat /tmp/menuchoice.$$)" in
+
+		"Overlay_Directory")
+			$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --inputbox "please edit the overlay directory :" 20 70 "$OVERLAYFULLDIR" 2> /tmp/menuchoice.$$
+			OVERLAYDIR="$(cat /tmp/menuchoice.$$)";;
+		"rc.conf")
+			$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --editbox "${OVERLAYFULLDIR}/etc/rc.conf" 40 90 2> /tmp/editedfile.$$
+			cat /tmp/editedfile.$$ > "${OVERLAYDIR}/etc/rc.conf";;
+		"mkinitcpio.conf")
+			$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --editbox "${OVERLAYFULLDIR}/etc/rc.conf" 40 90 2> /tmp/editedfile.$$
+			cat /tmp/editedfile.$$ > "${OVERLAYDIR}/etc/mkinitcpio.conf";;
+		"inittab")
+			$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --editbox "${OVERLAYFULLDIR}/etc/inittab" 40 90 2> /tmp/editedfile.$$
+			cat /tmp/editedfile.$$ > "${OVERLAYDIR}/etc/inittab";;
+		"issue")
+			$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --editbox "${OVERLAYFULLDIR}/etc/issue" 40 90 2> /tmp/editedfile.$$
+			cat /tmp/editedfile.$$ > "${OVERLAYDIR}/etc/issue";;
+		"rc.local")
+			$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --editbox "${OVERLAYFULLDIR}/etc/rc.local" 40 90 2> /tmp/editedfile.$$
+			cat /tmp/editedfile.$$ > "${OVERLAYDIR}/etc/rc.local";;
+		"xorg.conf")
+			$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --editbox "${OVERLAYFULLDIR}/etc/xorg.conf" 40 90 2> /tmp/editedfile.$$
+			cat /tmp/editedfile.$$ > "${OVERLAYDIR}/etc/X11/xorg.conf";;
+		"passwd")
+			$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --editbox "${OVERLAYFULLDIR}/etc/passwd" 40 90 2> /tmp/editedfile.$$
+			cat /tmp/editedfile.$$ > "${OVERLAYDIR}/etc/passwd";;
+		"hosts.allow")
+			$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --editbox "${OVERLAYFULLDIR}/etc/hosts.allow" 40 90 2> /tmp/editedfile.$$
+			cat /tmp/editedfile.$$ > "${OVERLAYDIR}/etc/hosts.allow";;
+		"sudoers")
+			$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --editbox "${OVERLAYFULLDIR}/etc/sudoers" 40 90 2> /tmp/editedfile.$$
+			cat /tmp/editedfile.$$ > "${OVERLAYDIR}/etc/sudoers";;
+		"motd")
+			$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --editbox "${OVERLAYFULLDIR}/etc/motd" 40 90 2> /tmp/editedfile.$$
+			cat /tmp/editedfile.$$ > "${OVERLAYDIR}/etc/motd";;
+		"Done")
+			return 0;;
+
+	esac
+
+	rm /tmp/menuchoice.$$
+	rm /tmp/editedfile.$$
+
+
+done
+
+
+}

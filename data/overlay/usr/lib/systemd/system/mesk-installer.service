@@ -1,0 +1,10 @@
+[Unit]
+Description=Mesk Linux Installer
+#After=systemd-user-sessions.service
+
+[Service]
+ExecStart=/usr/bin/xinit /sbin/mesk-installer
+
+[Install]
+Alias=installer.service
+

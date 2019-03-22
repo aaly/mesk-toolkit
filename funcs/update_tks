@@ -1,0 +1,127 @@
+# Build Packages from AUR function for Mesk Linux ISO building bash scripts
+# By Abdallah Aly 2010
+. funcs/common
+
+toolkitsDir="data/toolkits"
+
+update_tks ()
+{
+
+TITLE="Updating Toolkits"
+
+$DIALOG --backtitle "Mesk Linux Release Builder" --title "$TITLE" --menu "Select a toolkit to update:" 20 70 20 \
+"Larch5.3" "update larch toolkit" \
+"Larch7.1" "update larch toolkit" \
+"Archiso-live" "update archiso-live toolkit" 2> /tmp/menuchoice.utks
+
+case $? in
+1)
+   return 1;;
+255)
+   return 255;;
+esac
+
+
+case $(cat /tmp/menuchoice.utks) in
+"Larch7.1")
+currDir=$(pwd)
+cd $toolkitsDir
+mkdir "larch7" 2>&1> /dev/null
+cd larch7
+#if [ -d "data/larch" ]
+#then
+        if [ -e "data/larch-backup" ]
+        then
+        rm -r "data/larch-backup"
+        fi
+
+        if [ -e "data/larch" ]
+        then
+        mv "data/larch" "data/larch-backup"
+        fi
+downloadFile "ftp://ftp.berlios.de/pub/larch/larch7.2/i686/larch-setup" "downloading larch 7"
+chmod +x larch-setup
+executeCommand "./larch-setup" "setting up latch7"
+cd $currDir;;
+
+"Larch5.3")
+echo looool
+#if [ -d "data/larch" ]
+#then
+        if [ -e "data/larch-backup" ]
+        then
+        rm -r "data/larch-backup"
+        fi
+
+        if [ -e "data/larch" ]
+        then
+        mv "data/larch" "data/larch-backup"
+        fi
+
+svn export http://svn.berlios.de/svnroot/repos/larch/branches/larch5.3 data/larch 2>/dev/null &
+
+##while (ps a | grep "svn.berlios.de/svnroot/repos/larch" 2>&1>/dev/null)
+##do
+##$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --infobox "Updating Larch svn" 20 70
+##sleep 5
+##done;;
+#fi
+;;
+
+
+"Archiso-live")
+
+#if [ -d "data/archiso-live" ]
+#then
+	if [ -e "data/archiso-live-backup" ]
+	then
+	rm -r "data/archiso-live-backup"
+	fi
+
+        if [ -e "data/archiso-live" ]
+        then
+        mv "data/archiso-live" "data/archiso-live-backup"
+        fi
+
+git clone git://github.com/godane/archiso-live.git data/archiso-live >/dev/null &
+
+##while (ps a | grep "github.com/godane" 2>&1>/dev/null)
+##do
+##$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --infobox "Updating archiso-live git" 20 70
+##sleep 5
+##done
+;;
+#fi;;
+
+
+
+"Archiso")
+
+#if [ -d "data/archiso-live" ]
+#then
+	if [ -e "data/archiso-backup" ]
+	then
+	rm -r "data/archiso-backup"
+	fi
+
+        if [ -e "data/archiso" ]
+        then
+        mv "data/archiso" "data/archiso-backup"
+        fi
+
+##git clone git://github.com/godane/archiso-live.git data/archiso-live >/dev/null &
+git clone git://projects.archlinux.org/archiso.git >/dev/null &
+
+##while (ps a | grep "github.com/godane" 2>&1>/dev/null)
+##do
+##$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --infobox "Updating archiso-live git" 20 70
+##sleep 5
+##done
+;;
+#fi;;
+
+esac
+
+rm /tmp/menuchoice.utks
+
+}

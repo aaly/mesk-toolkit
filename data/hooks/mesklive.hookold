@@ -1,0 +1,377 @@
+
+mesk_mount_handler()
+{
+# exit 1
+:
+}
+
+setup_locale()
+{
+	case "$COUNTRY" in
+	ar)
+	# Arabic
+	LOCALE="ar_EG.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Africa/Cairo"
+	KEYMAP="ar"
+	XKEYMAP="ar"
+	;;
+	be)
+	# Belgian
+	LOCALE="be_BY.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Brussels"
+	KEYMAP="be"
+	XKEYMAP="be"
+	;;
+	bg)
+	# Bulgarian
+	LOCALE="bg_BG.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Sofia"
+	KEYMAP="bg"
+	XKEYMAP="bg"
+	;;
+	cn)
+	# Simplified Chinese
+	LOCALE="zh_CN.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Asia/Shanghai"
+	KEYMAP="us"
+	XKEYMAP="us"
+	;;
+	cz)
+	# Czech
+	LOCALE="cs_CZ.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Prague"
+	KEYMAP="cz-lat2"
+	XKEYMAP="cs"
+	;;
+	de)
+	# German
+	LOCALE="de_DE.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Berlin"
+	KEYMAP="de"
+	XKEYMAP="de"
+	;;
+	dk)
+	# Danish
+	LOCALE="da_DK.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Copenhagen"
+	KEYMAP="dk"
+	XKEYMAP="dk"
+	;;
+	en)
+	# English
+	LOCALE="en_US.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Canada/Pacific"
+	KEYMAP="us"
+	XKEYMAP="us"
+	;;
+	es)
+	# Spain
+	LOCALE="es_ES.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Madrid"
+	KEYMAP="es"
+	XKEYMAP="es"
+	;;
+	fi)
+	# Finland
+	LOCALE="fi_FI.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Helsinki"
+	KEYMAP="fi"
+	XKEYMAP="fi"
+	;;
+	fr)
+	# France
+	LOCALE="fr_FR.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Paris"
+	KEYMAP="fr"
+	XKEYMAP="fr"
+	;;
+	hu)
+	# Hungary
+	LOCALE="hu_HU.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Budapest"
+	KEYMAP="hu"
+	XKEYMAP="hu"
+	;;
+	it)
+	# Italy
+	LOCALE="it_IT.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Rome"
+	KEYMAP="it"
+	XKEYMAP="it"
+	;;
+	ja)
+	# Japanese
+	LOCALE="ja_JP.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Asia/Tokyo"
+	KEYMAP="us"
+	XKEYMAP="us"
+	;;
+	nl)
+	# Dutch
+	LOCALE="nl_NL.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Amsterdam"
+	KEYMAP="us"
+	XKEYMAP="us"
+	;;
+	no)
+	# Norway
+	LOCALE="nb_NO.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Oslo"
+	KEYMAP="no"
+	XKEYMAP="no"
+	;;
+	pl)
+	# Poland
+	LOCALE="pl_PL.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Warsaw"
+	KEYMAP="pl"
+	XKEYMAP="pl"
+	;;
+	ru)
+	# Russia
+	LOCALE="ru_RU.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Moscow"
+	KEYMAP="ru"
+	XKEYMAP="ru"
+	;;
+	sk)
+	# Slovak
+	LOCALE="sk_SK.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Bratislava"
+	KEYMAP="sk"
+	XKEYMAP="sk"
+	;;
+	sk)
+	# Slovenian
+	LOCALE="sl_SI.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Ljubljana"
+	KEYMAP="sl"
+	XKEYMAP="sl"
+	;;
+	tr)
+	# Turkish
+	LOCALE="tr_TR.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/Istanbul"
+	KEYMAP="tr"
+	XKEYMAP="tr"
+	;;
+	uk)
+	# British
+	LOCALE="en_GB.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Europe/London"
+	KEYMAP="uk"
+	XKEYMAP="uk"
+	;;
+	*)
+	# American
+	LOCALE="en_US.utf8"
+	HARDWARECLOCK="localtime"
+	TIMEZONE="Canada/Pacific"
+	KEYMAP="us"
+	XKEYMAP="us"
+	;;
+	esac
+	locale=${locale:=$LOCALE}
+	echo "locale=$locale" > /new_root/etc/conf.d/locale
+	echo "keymap=$KEYMAP" > /etc/conf.d/keymaps 
+	#echo "LOCALE=$LOCALE" > /new_root/etc/conf.d/locale
+}
+run_hook ()
+{
+
+ID="MESKLIVE"
+TMP_MOUNT="/mnt"
+
+if [ ! -d ${TMP_MOUNT} ]
+then
+	mkdir -p ${TMP_MOUNT}
+fi
+
+# Detecting the live CD is a very logical process
+
+#mount proc and sysfs << already mounted with sysvinit !
+
+##mkdir -p /proc
+##mount proc /proc
+##mount -t sysfs /sys
+                                                                      
+# Search for cdrom devices and add them to CDROM_LIST
+#Decho "detecting cdrom devices..."
+for I in `find /proc/sys/dev/cdrom | xargs grep -s  "drive name" | awk '{ print $3 }'`
+  do CDROM_LIST="$CDROM_LIST /dev/$I"
+done
+
+# Now we try to find the livecd using ID as identification
+                                                                                
+LIVE_DEVICE=""
+
+for cdrom_device in $CDROM_LIST
+do
+  mount -n -t iso9660 ${cdrom_device} $TMP_MOUNT
+  media_found=$?
+  if [ $media_found -eq 0 ]; then
+      #Decho -n "media found"
+      [ -e "$TMP_MOUNT/$ID" ]
+      media_live=$?
+      if [ $media_live -eq 0 ]; then
+      #Decho -n ". Livecd found."
+      LIVE_DEVICE="$cdrom_device"
+      break;
+      else
+      #Decho ". Not livecd."
+      umount -n $TMP_MOUNT
+      fi
+  else
+    echo "no media found"
+  fi
+done
+
+# Detecting the live usb
+if [[ "$LIVE_DEVICE" == "" ]]
+then
+sleep 2s
+for device in $(ls /sys/block/)
+do
+	if cat /sys/block/$device/removable | grep 1 &> /dev/null && [[ ${device/[0-9]*/} != "fd" ]]
+	then
+		echo "Mounting /dev/$device"
+		mount /dev/$device ${TMP_MOUNT}
+		[ -e "$TMP_MOUNT/$ID" ]
+	      	media_live=$?
+	      	if [ $media_live -eq 0 ]; then
+		      	LIVE_DEVICE="/dev/$device"
+			echo -n ". Livecd found. $LIVE_DEVICE"
+		      	break;
+	      	else
+		      	#Decho ". Not livecd."
+		      	umount -n $TMP_MOUNT
+	      	fi
+	fi
+done
+fi
+
+if [ "$LIVE_DEVICE" = "" ]; then
+  echo "couldn't find mesklinux live medium"
+  exit 1
+fi
+#else
+#  echo " Booting from $LIVE_DEVICE..."
+#
+#  echo 0x0100 > /proc/sys/kernel/real-root-dev
+#  cd $TMP_MOUNT
+#  pivot_root . mnt
+#  exec chroot . sh -c 'umount -l -n /mnt;
+#   exec -a init.new /sbin/init 3' <dev/console >dev/console 2>&1
+#fi
+#EOF
+#chmod 0755 $LIVECD/mnt/linuxrc &&
+#cd $LIVECD/ &&
+#umount $LIVECD/mnt &&
+#gzip $LIVECD/boot/initrd &&
+#touch $LIVECD/livecd
+
+fsck_root() {
+#Decho "skiping root mount"
+:
+}
+
+#avoid dependecies cache :D
+hwclock --hctosys
+
+CHROOT_PATH="/live"
+
+mkdir -p $CHROOT_PATH/rootfs
+mkdir -p $CHROOT_PATH/overlay
+mkdir -p $CHROOT_PATH/rwdir
+#mkdir -p /rwdir/etc/
+
+
+#mount --bind / $CHROOT_PATH/rootfs/
+
+touch /run/initramfs/root-fsck
+
+modprobe squashfs
+#modprobe aufs
+#modprobe aufs3
+
+#mount -t tmpfs /rwdir /rwdir
+
+#mount -t tmpfs -o size=10G,nr_inodes=10k,mode=700 tmpfs /rwdir
+mount -t tmpfs -o size=80% tmpfs $CHROOT_PATH/rwdir
+
+
+#Decho 'HOSTNAME="MESK"' > /rwdir/etc/rc.conf
+
+mount -t squashfs /mnt/system.sfs  $CHROOT_PATH/rootfs/ -o loop
+mount -t squashfs /mnt/overlay.sfs $CHROOT_PATH/overlay/ -o loop
+
+#/usr/bin/unionfs  -o dirs=/=rw:/rootfs=ro /new_root -o nonempty
+/usr/bin/unionfs  -o dirs=/rwdir=RW:/overlay=RO:/rootfs=RO /new_root -o allow_other,use_ino,suid,dev,nonempty,cow,max_files=32768,chroot=$CHROOT_PATH
+#mount -t aufs -o dirs=/rw:/ro=ro aufs /aufs
+#/usr/bin/unionfs  -o dirs=/overlay=ro /new_root -o nonempty
+
+
+#for loop in loop[0..99]
+#do
+#	if [ ! -e /dev/$loop ]
+#	then
+#		losetup  /dev/$loop /mnt/mesk.sfs
+#		root="/dev/${$loop}"
+#		break
+#	fi
+#done
+
+##losetup  /dev/loop1 /mnt/mesk.sfs
+##root="/dev/loop1"
+root=${cdrom_device}
+#ro=n
+mount_handler="mesk_mount_handler"
+
+#avoid dependecies cache :D
+#hwclock --hctosys
+
+#touch /currtime
+#find /new_root/etc/init.d/ -newer /currtime -exec touch {} \;
+#find /new_root/etc/conf.d/ -newer /currtime -exec touch {} \;
+#touch /new_root/etc/init.d
+#touch /new_root/init.d
+#touch /new_root/etc/conf.d
+#touch /new_root/conf.d
+#touch /new_root/etc/rc.conf
+
+#touch /new_root/usr/etc/conf.d
+#touch /new_root/usr/etc/init.d
+#touch /new_root/usr/local/etc/conf.d
+#touch /new_root/usr/local/etc/init.d
+
+#umount /sys
+#umount /proc
+#umount /dev
+#exec /sbin/init ${CMDLINE}
+setup_locale
+#cd $CHROOT_PATH
+hwclock --adjust
+pwconv -R /new_root
+}

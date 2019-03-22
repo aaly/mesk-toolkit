@@ -1,0 +1,20 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=su -m root -c mesk-installer
+GenericName[en_US]=
+GenericName=
+Icon=drive-harddisk
+MimeType=
+Name=Install
+Name[ar]=تنصيب
+Name[en]=Install
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

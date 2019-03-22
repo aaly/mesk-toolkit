@@ -1,0 +1,5 @@
+#!/bin/bash
+cp -r /etc/mesk/profiles/gnome/ /root/
+cp -r /etc/mesk/profiles/gnome-mesk/ /home/mesk
+chown -hR mesk:users /home/mesk
+/etc/rc.d/gdm start

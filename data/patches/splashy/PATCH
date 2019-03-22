@@ -1,0 +1,11 @@
+PKG_PREBUILD()
+{
+
+#sed -e 's/makedepends.*//' -i ${PKG_BUILDDIR}/PKGBUILD
+#sed -e '/^makedepends.*/c makedepends=('glib2' 'directfb' 'automake1.10' 'git')' -i ${PKG_BUILDDIR}/PKGBUILD
+sed -e "s/^makedepends.*/makedepends=('glib2' 'directfb' 'automake1.10' 'git')/" -i ${PKG_BUILDDIR}/PKGBUILD
+#sed -e 's/depends.*//' -i ${PKG_BUILDDIR}/PKGBUILD
+sed -e 's/^depends.*//' -i ${PKG_BUILDDIR}/PKGBUILD
+
+
+}

@@ -1,0 +1,86 @@
+ #!/bin/bash
+ 
+ build() {
+     add_binary /bin/bash  #/bin/bash is given as an example, you can type your desired executable here
+     add_runscript  # will determine the name of the script, and add appropriately from /usr/lib/initcpio/hooks
+#sed -i 's|.*/usr/lib/klibc/bin/kinit\.shared.*||' "${FILELIST}"
+#    sed -i 's|/usr/lib/klibc/bin/kinit|/lib/initcpio/kinit|' "${FILELIST}"
+ }
+ 
+ help() {
+:
+ }
+
+
+#remoe this...
+run_hook ()
+{
+
+ID="MESKLIVE"
+TMP_MOUNT="/mnt"
+
+if [ ! -d ]
+then
+	mkdir -p ${TMP_MOUNT}
+fi
+
+# Detecting the live CD is a very logical process
+                                                                                
+# Search for cdrom devices and add them to CDROM_LIST
+echo "detecting cdrom devices..."
+for I in `find /proc/sys/dev/cdrom | xargs grep -s  "drive name" | awk '{ print $3 }'`
+  do CDROM_LIST="$CDROM_LIST /dev/$I"
+done
+
+# Now we try to find the livecd using ID as identification
+                                                                                
+LIVE_DEVICE=""
+
+for cdrom_device in $CDROM_LIST
+do
+  mount -n -t iso9660 ${cdrom_device} $TMP_MOUNT
+  media_found=$?
+  if [ $media_found -eq 0 ]; then
+      echo -n "media found"
+      [ -e "$TMP_MOUNT/$ID" ]
+      media_live=$?
+      if [ $media_live -eq 0 ]; then
+      echo -n ". Livecd found."
+      LIVE_DEVICE="$cdrom_device"
+      break;
+      else
+      echo ". Not livecd."
+      umount -n $TMP_MOUNT
+      fi
+  else
+    echo "no media found"
+  fi
+done
+if [ "$LIVE_DEVICE" = "" ]; then
+  echo "No livecd found!!!"
+  exit 1
+fi
+#else
+#  echo " Booting from $LIVE_DEVICE..."
+
+#  echo 0x0100 > /proc/sys/kernel/real-root-dev
+#  cd $TMP_MOUNT
+#  pivot_root . mnt
+#  exec chroot . sh -c 'umount -l -n /mnt;
+#   exec -a init.new /sbin/init 3' <dev/console >dev/console 2>&1
+#fi
+#EOF
+#chmod 0755 $LIVECD/mnt/linuxrc &&
+#cd $LIVECD/ &&
+#umount $LIVECD/mnt &&
+#gzip $LIVECD/boot/initrd &&
+#touch $LIVECD/livecd
+
+
+mkdir /rootfs
+
+modprobe squashfs
+
+mount -t squashfs ${TMP_MOUNT}/mesk.sfs /rootfs/ -o loop
+/boot/unionfs -o dirs=/=rw:/rootfs=ro unionfs /
+}

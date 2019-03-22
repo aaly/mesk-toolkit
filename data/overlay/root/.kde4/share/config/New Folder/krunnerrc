@@ -1,0 +1,6 @@
+[General]
+PastQueries=switch2,
+
+[Interface]
+Height 900=62
+Width 1440=420

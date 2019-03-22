@@ -1,0 +1,5 @@
+PKG_PREBUILD()
+{
+sed 's/-ARCH/-mesk/' -i ${PKG_BUILDDIR}/PKGBUILD
+sed 's/3.6/3.7/' -i ${PKG_BUILDDIR}/PKGBUILD
+}

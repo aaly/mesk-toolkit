@@ -1,0 +1,12 @@
+[General]
+PassiveResourceKeys=
+ResourceKeys=RTKsLSBisx
+Standard=RTKsLSBisx
+
+[Resource_RTKsLSBisx]
+FileFormat=vcard
+ResourceIdentifier=RTKsLSBisx
+ResourceIsActive=true
+ResourceIsReadOnly=false
+ResourceName=Default Address Book
+ResourceType=file

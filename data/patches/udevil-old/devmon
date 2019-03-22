@@ -1,0 +1,31 @@
+#!/sbin/runscript
+# Copyright (c)2012 mesklinux, AbdAllah Aly <aaly90@gmail.com>
+# Released under the 2-clause BSD license.
+
+description="udevil openrc service."
+
+depend()
+{
+	:
+}
+
+start()
+{
+	ebegin "Starting udevil"
+	devmon 2>&1>/dev/null &
+	eindent
+	ret=$?
+
+	eoutdent
+
+	eend $ret
+}
+
+stop()
+{
+        ebegin "Stoping udevil"
+	killall devmon
+	ret=$?
+	eend $ret
+
+}

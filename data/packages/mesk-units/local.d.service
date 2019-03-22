@@ -1,0 +1,17 @@
+[Unit]
+Description=Run rc files
+Before=default.target
+
+[Service]
+ExecStart=/bin/local.d.sh
+Type=oneshot
+
+[Install]
+#Before=basic.target
+#After=basic.target
+#After=basic
+#WantedBy=sysinit.target
+#WantedBy=reboot.target
+#WantedBy=poweroff.target
+#WantedBy=basic.target
+RequiredBy=default.target

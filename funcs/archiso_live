@@ -1,0 +1,92 @@
+# the archiso-live make iso function
+# By Abdallah Aly 2010
+
+archiso_live ()
+{ 
+
+TITLE="available Archiso-live profiles"
+
+$DIALOG --clear --backtitle "$BACKTITLE" --title "$TITLE" --menu "choose a profile: " 20 70 30 \
+"kde-dvd" "live kde dvd" \
+"kde-cd" "live kde cd" \
+"gnome-dvd" "live gnome dvd" \
+"gnome-cd" "live gnome cd" \
+"server" "server install cd" \
+"oracle" "oracle install dvd" 2> /tmp/menuchoice.$$
+
+
+case $retval in
+  1)
+    return 1;;
+  255)
+    return 255;;
+esac
+
+if [[meskprofile == "custom"]]
+then
+
+$DIALOG --backtitle "$BACKTITLE" --title "Archiso-Live Config" \
+--form "\nplease edit Config Variables\
+\nROOT_MOD is the root filesystem or first module. This is where the kernel \
+should be installed into. You don't have to set it if the kernel is listed the \
+first .list file in list folder of archiso-live." 25 80 16 \
+"WORKDIR:" 1 1 ".working-${ARCH}" 1 25 40 40 \
+"DATE:" 2 1 "$(date +%F)" 2 25 40 40 \
+"CDNAME:" 3 1 "Mesk Linux ISO" 3 25 40 40 \
+"CDNAME:" 4 1 "$CDNAME-${DATE}-${ARCH}.iso" 4 25 40 40 \
+"ROOT_MOD:" 5 1 "" 5 25 40 40 \
+"MOVE_MODULES:" 6 1 "ap.010.xlibs ap.011.xapps" 6 25 40 40 \
+"MODULES:" 7 1 "a.000.kernel a.001.core a.002.xorg a.003.xfce a.004.firefox a.005.libs a.006.apps a.007.devel a.008.java a.009.games ${MOVE_MODULES}" 7 25 40 40 \
+"DELDIR:" 8 1 "" 8 25 40 40 \
+"KERNEL:" 9 1 "/etc/mkinitcpio.d/kernel26.kver" 9 25 40 40 \
+"VMLINUZ:" 10 1 "boot/vmlinuz26" 10 25 40 40 \
+"CDLABEL:" 11 1 "" 11 25 40 40 \
+"PUBLISHER:" 12 1 "http://mesklinux.org" 12 25 40 40 \
+"AUTHOR:" 13 1 "Abdallah Aly" 13 25 40 40 \
+"NOLZMA:" 14 1 "n" 14 25 40 40 \
+"WORKDIR:" 15 1 "" 15 25 40 40 \
+"DATE:" 16 1 "" 16 25 40 40 \
+"CDNAME:" 17 1 "" 17 25 40 40 \
+2>/tmp/mlw.form.$$
+
+OPTIONS=(`cat /tmp/mlw.form.$$ | tr '\\n' ' '`)
+
+# archiso-live config file variables
+
+WORKDIR="${OPTIONS[0]}"
+DATE="${OPTIONS[1]}"
+CDNAME="${OPTIONS[2]}"
+ISONAME="${OPTIONS[3]}"
+
+ROOT_MOD="${OPTIONS[4]}"
+MOVE_MODULES="${OPTIONS[5]}"
+MODULES="${OPTIONS[6]}"
+DELDIR="${OPTIONS[7]}"
+KERNEL="${OPTIONS[8]}"
+VMLINUZ="${OPTIONS[9]}"
+CDLABEL="${OPTIONS[10]}"
+PUBLISHER="${OPTIONS[11]}"
+AUTHOR="${OPTIONS[12]}"
+NOLZMA="${OPTIONS[13]}"
+
+# archiso-live build file variables
+
+WORKDIR="${OPTIONS[14]}"
+DATE="${OPTIONS[15]}"
+CDNAME="${OPTIONS[16]}"
+
+fi
+
+cd $archiso_live_home/scripts/
+
+# This overrides the mkinitcpio path
+export PATH="`pwd`/mkinitcpio:`pwd`:$PATH"
+
+cd $archiso_live_home/scripts/profiles/$profile
+
+# build the iso with the current environment architecture
+sh build makeiso $(uname -m)
+
+# clean up the PATH
+source /etc/profile
+}

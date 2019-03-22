@@ -1,0 +1,17 @@
+PKG_PREBUILD()
+{
+
+sed -e 's/.*arch-release$//' -i ${PKG_BUILDDIR}/PKGBUILD
+sed -e 's/www.archlinux/www.mesklinux/' -i ${PKG_BUILDDIR}/PKGBUILD
+
+cp ${PKG_PATCHDIR}/os-release ${PKG_BUILDDIR}/
+cp ${PKG_PATCHDIR}/issue ${PKG_BUILDDIR}/
+cp ${PKG_PATCHDIR}/securetty  ${PKG_BUILDDIR}/
+#cp ${PKG_PATCHDIR}/ ${PKG_BUILDDIR}/
+
+}
+
+PKG_POSTPACKAGE()
+{
+	install -d -m755 ${pkgdir}/local.d/
+}

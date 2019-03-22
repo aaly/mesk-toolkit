@@ -1,0 +1,20 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=mesk-installer
+GenericName[en_US]=
+GenericName=
+Icon=drive-harddisk
+MimeType=
+Name[en]=Install
+Name=Install
+Name[ar]=تنصيب
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

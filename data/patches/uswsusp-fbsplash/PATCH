@@ -1,0 +1,5 @@
+PKG_PREBUILD()
+{
+#sed -e '/^depends.*/a \makedepends=\(\'libx86\'\)' -i ${PKG_BUILDDIR}/PKGBUILD
+sed -e '/^depends.*/i \makedepends=(libx86)'  -i ${PKG_BUILDDIR}/PKGBUILD
+}

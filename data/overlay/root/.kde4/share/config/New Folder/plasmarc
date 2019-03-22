@@ -1,0 +1,21 @@
+[Applet Browser]
+used=,notifier,folderview,systemtray,digital-clock,tasks,pager,launcher,plasma_applet_notes,calendar,clock,trash
+
+[KFileDialog Settings]
+Height 900=450
+Recent Files[$e]=mesk-default.jpg,/usr/share/wallpapers/mesk/mesk-default.jpg
+Width 1440=700
+
+[PlasmaAppletBrowserDialog]
+Height 900=599
+Width 1440=404
+
+[PlasmaViews][1]
+panelVisibility=0
+
+[PlasmaViews][2]
+panelVisibility=0
+
+[ViewIds]
+1=2
+3=1

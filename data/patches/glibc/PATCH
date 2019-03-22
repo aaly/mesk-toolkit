@@ -1,0 +1,6 @@
+PKG_POSTPACKAGE()
+{
+sed 's/  en_US.*//g'  -i ${pkgdir}/etc/locale.gen
+sed '/ar_EG/s/#//' -i ${pkgdir}/etc/locale.gen
+sed '/en_US/s/#//'  -i ${pkgdir}/etc/locale.gen
+}

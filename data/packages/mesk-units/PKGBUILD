@@ -1,0 +1,61 @@
+# Maintainer: AbdAllah Aly <l3thal8@gmail.com>
+pkgname=mesk-units
+pkgver=0.1
+pkgrel=1
+pkgdesc=""
+arch=('any')
+url="http://www.mesklinux.org"
+license=('BSD-3')
+groups=()
+depends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+source=(rc-local.service
+	local.d.service
+	local.d.sh)
+
+md5sums=('10f959686d56218607eb0ade3151b7a4'
+         'bbe0c9989079284fe5696f50e16f8139'
+         '722ae6e4fa1d901eaaaa84ed766e6d6c')
+package()
+{
+#  mkdir -p $pkgdir/usr/lib/systemd/system/
+# install $srcdir/rc-local.service $pkgdir/usr/lib/systemd/system/
+
+mkdir -p $pkgdir/etc/systemd/system/
+mkdir -p $pkgdir/usr/lib/systemd/system/
+install $srcdir/rc-local.service $pkgdir/usr/lib/systemd/system/
+install $srcdir/local.d.service $pkgdir/usr/lib/systemd/system/
+
+mkdir -p $pkgdir/usr/bin/
+install $srcdir/local.d.sh $pkgdir/usr/bin/
+
+#mkdir -p $pkgdir/etc/systemd/system/multi-user.target.wants
+mkdir -p $pkgdir/etc/systemd/system/basic.target.wants
+mkdir -p $pkgdir/etc/systemd/system/poweroff.target.wants
+mkdir -p $pkgdir/etc/systemd/system/reboot.target.wants
+
+ln -s /etc/systemd/system/local.d.service $pkgdir/etc/systemd/system/basic.target.wants/local.d.service
+#ln -s /etc/systemd/system/rc-local.service $pkgdir/etc/systemd/system/multi-user.target.wants/rc-local.service
+ln -s /etc/systemd/system/local.d.service $pkgdir/etc/systemd/system/poweroff.target.wants/local.d.service
+ln -s /etc/systemd/system/local.d.service $pkgdir/etc/systemd/system/reboot.target.wants/local.d.service
+
+
+}
+md5sums=('2bab20857a11b285786b1e29e8773276'
+         'bbe0c9989079284fe5696f50e16f8139'
+         '722ae6e4fa1d901eaaaa84ed766e6d6c')
+md5sums=('49e3cbe26fd2294b55b20ea711b55781'
+         'bbe0c9989079284fe5696f50e16f8139'
+         '722ae6e4fa1d901eaaaa84ed766e6d6c')
+md5sums=('49e3cbe26fd2294b55b20ea711b55781'
+         'fe871a3659bee9de46f87fa58508d199'
+         '722ae6e4fa1d901eaaaa84ed766e6d6c')
+md5sums=('a87b611e0b1314a9c778ba1ed7e51e34'
+         '20e14406ee119bc839439d75ef6659b8'
+         '722ae6e4fa1d901eaaaa84ed766e6d6c')

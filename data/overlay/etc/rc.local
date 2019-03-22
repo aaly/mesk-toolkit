@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# /etc/rc.local: Local multi-user startup script.
+#
+
+# Restore saved sound volume, etc.
+alsactl restore
+fstab-update
+/etc/accounts
+chown -hR mesk:users /home/mesk

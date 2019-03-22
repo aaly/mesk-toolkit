@@ -1,0 +1,3 @@
+profile_name="kde-dvd"
+desc="kde dvd with big cheese"
+OVERLAYDIR="rootoverlay"

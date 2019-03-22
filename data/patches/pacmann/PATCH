@@ -1,0 +1,13 @@
+PKG_PREBUILDD()
+{
+##sed "/build()/ a sed -e \'/^static\ int\ extract_single_file/,/^}/{/ archive_entry_pathname(entry)/a if  (strstr(filename, \"rc.d/\") != NULL) {char[strlen(entryname)+strlen("abbbabbbbbbbbb")] comm=\"/bin/echofile; strcat(comm, entryname);const char* comm2= comm;system(comm2);} \' -e\'}\' -i \$srcdir/\$pkgname-\$pkgver/lib/libalpm/add.c"  -i ${PKG_BUILDDIR}/PKGBUILD
+####sed "/build()/ a sed -e \'/^static\ int\ extract_single_file/,/^}/{/ archive_entry_pathname(entry)/a char[] rcupdater=\"/bin/rcu \"; if  (strstr(filename, \"rc.d\") != NULL || strstr(filename, \"init.d\") != NULL) {char comm[strlen(\"/bin/echofile \")+strlen(entryname)+1]; strcpy(comm,\"/bin/echofile \");strcat(comm, entryname);system(comm);} \' -e\'}\' -i \$srcdir/\$pkgname-\$pkgver/lib/libalpm/add.c"  -i ${PKG_BUILDDIR}/PKGBUILD
+#sed "/build()/ a sed -e \'/^static\ int\ extract_single_file/,/^}/{/ archive_entry_pathname(entry)/a char rcupdater[]=\"/bin/rcu \"; if  (strstr(entryname, \"rc.d\") != NULL || strstr(entryname,\"init.d\")) {char comm[strlen(rcupdater)+strlen(entryname)]; strcpy(comm, rcupdater); strcat(comm, entryname);system(comm);} \' -e\'}\' -i \$srcdir/\$pkgname-\$pkgver/lib/libalpm/add.c"  -i ${PKG_BUILDDIR}/PKGBUILD
+##sed "/build()/ a sed -e \'/^static\ int\ extract_single_file/,/^}/{/.*return errors.*/i char rcupdater[]=\"/bin/rcu \"; if  (strstr(entryname, \"rc.d\") != NULL || strstr(entryname,\"init.d\")) {char comm[strlen(rcupdater)+strlen(entryname)]; strcpy(comm, rcupdater); strcat(comm, entryname);system(comm);} \' -e\'}\' -i \$srcdir/\$pkgname-\$pkgver/lib/libalpm/add.c"  -i ${PKG_BUILDDIR}/PKGBUILD
+
+# we ned openrc because of our tool rcu
+#sed -e "s/\(^depends=.*\)/\1 'openrc'/" -i ${PKG_BUILDDIR}/PKGBUILD
+
+#cp ${PKG_PATCHDIR}/pacman.conf.x86_64 ${PKG_BUILDDIR}
+#cp ${PKG_PATCHDIR}/pacman.conf ${PKG_BUILDDIR}
+}

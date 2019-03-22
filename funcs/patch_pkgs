@@ -1,0 +1,5 @@
+patch_pkgs()
+{
+	patch package #the pkgbuild ....
+	patch files	  # patches files after installation
+}

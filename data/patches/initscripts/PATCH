@@ -1,0 +1,34 @@
+PKG_PREPACKAGE()
+{
+
+#sed -e '/^rc/i \si::sysinit:/sbin/rc sysinit' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+##sed -e 's/rc::sysinit.*/rc::bootwait:\/sbin\/rc boot/' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+sed -e 's/rc::sysinit.*/rc::sysinit:\/sbin\/rc sysinit/' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+sed -e '/rc::sysinit.*/a rb::bootwait:\/sbin\/rc boot' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+
+sed -e 's/^rs.*/rs:S1:wait:\/sbin\/rc single/' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+sed -e 's/^rm.*/rm:2345:wait:\/sbin\/rc default/' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+sed -e 's/^rh.*/rh:06:wait:\/sbin\/rc shutdown/' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+
+##sed -e '/^c6/a c7:2345:respawn:/sbin/agetty -8 -s 38400 tty7 linux' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+##sed -e '/^c7/a c8:2345:respawn:/sbin/agetty -8 -s 38400 tty8 linux' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+##sed -e '/^c8/a c9:2345:respawn:/sbin/agetty -8 -s 38400 tty9 linux' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+##sed -e '/^c9/a c10:2345:respawn:/sbin/agetty -8 -s 38400 tty10 linux' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+##sed -e '/^c10/a c11:2345:respawn:/sbin/agetty -8 -s 38400 tty11 linux' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+##sed -e '/^c11/a c12:2345:respawn:/sbin/agetty -8 -s 38400 tty12 linux' -i ${srcdir}/${pkgname}-${pkgver}/inittab
+
+
+##echo "c8:2345:respawn:/sbin/agetty -8 -s 38400 tty8 linux" >> ${srcdir}/${pkgname}-${pkgver}/inittab
+##echo "c9:2345:respawn:/sbin/agetty -8 -s 38400 tty9 linux" >> ${srcdir}/${pkgname}-${pkgver}/inittab
+##echo "c10:2345:respawn:/sbin/agetty -8 -s 38400 tty10 linux" >> ${srcdir}/${pkgname}-${pkgver}/inittab
+##echo "c11:2345:respawn:/sbin/agetty -8 -s 38400 tty11 linux" >> ${srcdir}/${pkgname}-${pkgver}/inittab
+##echo "c12:2345:respawn:/sbin/agetty -8 -s 38400 tty12 linux" >> ${srcdir}/${pkgname}-${pkgver}/inittab
+
+}
+
+#PKG_PREBUILD()
+#{
+#	rm ${pkgdir}/etc/rc.conf
+#	we should echoo oprnrc stuff rc.conf entries to initscripts rc.conf
+#cp $PKG_PATCHDIR/inittab ${srcdir}/${pkgname}-${pkgver}
+#}

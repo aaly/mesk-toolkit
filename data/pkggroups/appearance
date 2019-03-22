@@ -1,0 +1,7 @@
+gtk-engines
+#gtk-qt-engine change pkgconfig to pkg-config
+#gtk-smooth-engine
+gtk-theme-switch2
+#ubuntulooks
+gtk-rezlooks-engine
+yakuake-skin-plasma-oxygen-panel

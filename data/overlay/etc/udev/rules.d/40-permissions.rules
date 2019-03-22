@@ -1,0 +1,2 @@
+BUS==usb, SYSFS{idVendor}==0421, SYSFS{idProduct}==002f, GROUP=dialout
+

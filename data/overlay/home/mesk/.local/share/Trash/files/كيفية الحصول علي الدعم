@@ -1,0 +1,20 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=firefox file:///root/Desktop/.docs/support.html
+GenericName[en_US]=
+GenericName=
+Icon=voicecall
+MimeType=
+Name[en]=Support
+Name=Support
+Name[ar]=الدعم
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

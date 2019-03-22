@@ -1,0 +1,21 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=gparted
+GenericName[en_US]=
+GenericName=
+Icon=server-database
+MimeType=
+Name[en_US]=Disk Partitioner
+Name=Disk Partitioner
+Name[ar]=مدير القرص
+Name[en]=Disk Partitioner
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

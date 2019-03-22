@@ -1,0 +1,23 @@
+timeout 300
+default 0
+color light-blue/blue black/light-grey
+splashimage=/boot/splash.xpm.gz
+
+title << Back to Main Menu
+configfile /boot/grub/menu.lst
+
+title    Run memtest (Memory Testing)
+kernel /boot/memtest86+-1.70.bin
+
+# http://www.vortex.prodigynet.co.uk/x86test/
+title    Run x86test (CPU Info)
+kernel /boot/x86test_zImage.bin
+#wget http://www.vortex.prodigynet.co.uk/x86test/x86test_zImage.bin
+
+# Space Invaders!!! (http://www.erikyyy.de/invaders/)
+title    Space Invaders!!!
+kernel /boot/invaders.img
+
+title    Install GRUB to hd0 MBR
+root  (hd0,0)
+setup (hd0)

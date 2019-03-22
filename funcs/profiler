@@ -1,0 +1,114 @@
+# Profiler menu
+# By Abdallah Aly 2010
+
+
+
+
+select_profile()
+{
+	TITLE="available profiles"
+
+i=0
+unset profileslist
+#profileslist=()
+for profile in $(ls $currdir/profiles/)
+do
+	profile_desc=$(cat $currdir/profiles/$profile/info | grep desc | sed 's|.*=||g' | sed 's|"||g')
+	profile_name=$(cat $currdir/profiles/$profile/info | grep name | sed 's|.*=||g' | sed 's|"||g')
+#	profileslist=(${profileslist[@]} ${profile_name} ${profile_desc} )
+
+
+profileslist[i++]="${profile_name}"
+profileslist[i++]="${profile_desc}"
+
+done
+
+profileslist[i++]="custom"
+profileslist[i++]="custom profile"
+
+#profile_name=""
+#profile_desc=""
+
+$DIALOG --clear --backtitle "$BACKTITLE" --title "$TITLE" --menu "choose a profile: " 20 70 30 "${profileslist[@]}" 2> /tmp/menuchoice.$$
+
+case $? in
+  1)
+    return 1;;
+  255)
+    return 255;;
+esac
+
+meskprofile=$(cat /tmp/menuchoice.$$)
+rm /tmp/menuchoice.$$
+
+if [ $meskprofile != "custom" ]
+then	
+profile_name=${meskprofile}
+profile_arch="i686"
+. $currdir/profiles/$meskprofile/info
+
+workdir=${currdir}/profiles/${meskprofile}/workdir
+pkgscache="${currdir}/data/tmp/cache/$profile_arch"
+
+cp ${currdir}/data/config/pacman.conf ${pacmantmpconf}
+
+sed -e "s@ARCH@${profile_arch}@g" -i ${pacmantmpconf}
+sed -e "s@BASE@${currdir}@g" -i ${pacmantmpconf}
+
+
+fi
+generate_ignoredpkgs
+}
+profiler ()
+{
+
+
+if [[ -z $profile_name ]]
+then
+select_profile
+fi
+
+continue=true	
+while ($continue)
+do
+	$DIALOG --clear --backtitle "$BACKTITLE" --title "$TITLE" --menu "pick your step for profile "$meskprofile" : " 20 70 30 \
+	"Basic Info" "Set paths and stuff" \
+	"Advanced Info" "Set initcpio and stuff" \
+	"Add Packages" "Select Packages to install" \
+	"Ignore Packages" "Select Packages to Ignore" \
+	"Save" "Save your profile permanently" \
+	"Change" "change current profile" \
+	"Done" "Ready" 2> /tmp/menuchoice.$$
+	
+	case $? in
+		0)
+			continue=true;;
+		1)
+			continue=false
+			return 1;;
+		255)
+			continue=false
+			return 255;;
+	esac
+	
+	case $(cat /tmp/menuchoice.$$) in
+		"Basic Info")
+			basic_info;;
+		"Advanced Info")
+			adv_info;;
+#		"Overlay")
+#			overlay;;
+		"Add Packages")
+			select_packages;;
+		"Ignore Packages")
+			remove_packages;;
+		"Save")
+			save_profile;;
+		"change")
+			select_profile;;
+		"Done")
+			return 0;;
+		esac
+	done
+    rm /tmp/menuchoice.$$
+}

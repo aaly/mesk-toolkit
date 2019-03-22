@@ -1,0 +1,28 @@
+usr//bin/bash/ /install/localpkgs.setup
+
+systemctl -f disable multi-user.target
+systemctl -f enable graphical.target
+if [ -e /usr/lib/systemd/system/kdm.service ]
+then
+	systemctl -f enable kdm.service
+#	systemctl start kdm
+	kdm
+elif [ -e /usr/lib/systemd/system/gdm.service ]
+then
+	systemctl -f enable gdm.service
+#	systemctl start gdm
+	gdm
+elif [ -e /usr/lib/systemd/system/lxdm.service ]
+then
+	systemctl -f enable lxdm.service
+#	systemctl start lxdm
+	lxdm
+fi
+
+#systemctl -f enable display-manager
+#systemctl start display-manager
+
+systemctl -f enable NetworkManager
+
+
+rm /etc/local.d/configure.start

@@ -1,0 +1,11 @@
+[Layout]
+DisplayNames=us,ara
+IndicatorOnly=false
+LayoutList=us,ara
+Model=pc104
+Options=grp:alt_shift_toggle
+ResetOldOptions=true
+ShowFlag=true
+ShowSingle=false
+SwitchMode=Global
+Use=true

@@ -1,0 +1,10 @@
+[Unit]
+Description=Run rc.local
+Before=default.target
+[Service]
+ExecStart=/etc/rc.local
+Type=oneshot
+
+[Install]
+RequiredBy=default.target
+

@@ -1,0 +1,4 @@
+PKG_PREBUILD()
+{
+sed -e '/'make DESTDIR="${pkgdir}" install'/a sed 's/AllowRootLogin=false/AllowRootLogin=true' -i ${pkgdir}/usr/share/config/kdm/kdmrc ' -i  ${PKG_BUILDDIR}/PKGBUILD
+}

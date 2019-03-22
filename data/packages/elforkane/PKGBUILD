@@ -1,0 +1,42 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: AbdAllah Aly <l3thal8@gmail.com>
+pkgname=elforkane
+pkgver=1.2
+pkgrel=1
+pkgdesc=""
+arch=('i686')
+url="http://www.elkirtasse.co.cc"
+license=('GPL3')
+groups=()
+depends=(qt)
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+source=(http://sourceforge.net/projects/elforkane/files/linux/all_linux/elforkane-$pkgver-app.tar.gz/download)
+md5sums=('d94925b2f25a54aa6370678524218032')
+
+#build() {
+#  cd "$srcdir/$pkgname-$pkgver"
+#  ./configure --prefix=/usr
+#  make
+#}
+
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver-app"
+  #make DESTDIR="$pkgdir/" install
+  cp -r * $pkgdir
+  rm $pkgdir/elforkane
+  rm $pkgdir/elforkane.desktop 
+  rm $pkgdir/usr/lib/lib*
+}
+
+# vim:set ts=2 sw=2 et:

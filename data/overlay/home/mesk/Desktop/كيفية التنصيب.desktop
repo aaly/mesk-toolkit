@@ -1,0 +1,20 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=firefox file:///home/mesk/Desktop/.docs/install.html
+GenericName[en_US]=
+GenericName=
+Icon=graphics-viewer-document
+MimeType=
+Name=How to install
+Name[ar]=كيفية التنصيب
+Name[en]=How to install
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

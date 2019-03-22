@@ -1,0 +1,4 @@
+PKG_POSTPACKAGE()
+{
+cp ${PKG_PATCHDIR}/Xdefaults ${pkgdir}/etc/skel/.Xdefaults
+}

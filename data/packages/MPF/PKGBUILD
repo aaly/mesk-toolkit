@@ -1,0 +1,42 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: Your Name <youremail@domain.com>
+pkgname=MPF
+pkgver=1
+pkgrel=1
+pkgdesc="Mesk Page Framework"
+arch=('i686' 'x86_64')
+url="http://www.mesklinux.org"
+license=('BSD2')
+groups=(mesk-devel)
+depends=(qt5-base parted expect)
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+#source=($pkgname-$pkgver.tar.bz)
+#md5sums=('10617ddc56ea65a255ca61aa65f46799')
+noextract=()
+build() {
+#	cp -r /home/dude/MPF "$srcdir/"
+	cp -r /run/media/dude/ddd7d4d3-6507-480a-a9de-003873efb28a/dude/MPF/  "$srcdir/MPF"
+	cd "$srcdir/MPF"
+#  ./configure --prefix=/usr
+#	rm Makefile
+#   qmake-qt4 CONFIG+=debug
+	qmake CONFIG+=debug
+	make
+}
+
+package() {
+	cd "$srcdir/MPF"
+	make CONFIG=debug INSTALL_ROOT="$pkgdir" install
+	cp $srcdir/MPF/ui* $pkgdir/usr/include/MPF/
+}
+
+# vim:set ts=2 sw=2 et:

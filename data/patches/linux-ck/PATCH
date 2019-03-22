@@ -1,0 +1,33 @@
+PKG_PREBUILD()
+{
+#sed 's/pkgname=linux-ck/pkgname=linux/' -i ${PKG_BUILDDIR}/PKGBUILD
+sed 's/linux-ck/linux/g' -i ${PKG_BUILDDIR}/PKGBUILD
+#sed 's/linux-ck-headers/linux-headers/' -i ${PKG_BUILDDIR}/PKGBUILD
+sed 's/_kernelname=-ck/_kernelname=-mesk/' -i ${PKG_BUILDDIR}/PKGBUILD
+sed 's/KERNEL_NAME=-ck/KERNEL_NAME=-mesk/' -i ${PKG_BUILDDIR}/PKGBUILD
+
+##sed '/mv "$pkgdir\/lib" "$pkgdir\/usr"/d' -i ${PKG_BUILDDIR}/PKGBUILD
+##sed '/# Now we call depmod.../ i # move module tree /lib -> /usr/lib \n mv "$pkgdir/lib" "$pkgdir/usr"' -i ${PKG_BUILDDIR}/PKGBUILD
+
+mv ${PKG_BUILDDIR}/linux-ck.preset ${PKG_BUILDDIR}/linux.preset
+mv ${PKG_BUILDDIR}/linux-ck.install ${PKG_BUILDDIR}/linux.install
+sed 's/-ck//g' -i ${PKG_BUILDDIR}/linux.install
+sed 's/-ck//g' -i ${PKG_BUILDDIR}/linux.preset
+
+sed 's/HIGHMEM4G/HIGHMEM64G/g' -i ${PKG_BUILDDIR}/config
+
+# enable BFQ
+sed 's/_BFQ_enable_="n"/_BFQ_enable_="y"/' -i ${PKG_BUILDDIR}/PKGBUILD
+
+# add fbcondecor patch
+sed '/CONFIG_FRAMEBUFFER_CONSOLE_ROTATION/a CONFIG_FB_CON_DECOR=y' -i ${PKG_BUILDDIR}/config
+sed 's/CONFIG_FB_TILEBLITTING.*/CONFIG_FB_TILEBLITTING=n/' -i ${PKG_BUILDDIR}/config
+sed '/source=(/ a "https://github.com/mjanusz/homepage/raw/master/projects/fbcondecor/fbcondecor-0.9.6-3.5-rc3.patch"' -i ${PKG_BUILDDIR}/PKGBUILD
+#sed '/patch.*change-default-console-loglevel.patch.*/ a # add fbcondecor\n patch -Np1 -i ${srcdir}/fbcondecor-0.9.6-3.5-rc3.patch' -i ${PKG_BUILDDIR}/PKGBUILD
+
+
+
+#sed '/source=(/ a "http://grsecurity.net/test/pax-linux-2.6.32.60-test202.patch"' -i ${PKG_BUILDDIR}/PKGBUILD
+#sed '/patch.*change-default-console-loglevel.patch.*/ a # add pax\n patch -Np1 -i ${srcdir}/pax-linux-2.6.32.60-test202.patch' -i ${PKG_BUILDDIR}/PKGBUILD
+
+}

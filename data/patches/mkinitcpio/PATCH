@@ -1,0 +1,15 @@
+PKG_PREBUILD()
+{
+	:
+}
+
+PKG_PREPACKAGE()
+{
+#sed -e '/^HOOKS/s/"$/ splashy"/' -i ${srcdir}/${pkgname}-${pkgver}/mkinitcpio.conf
+#sed -e '/^HOOKS/s/"$/ fbsplash"/' -i ${srcdir}/${pkgname}-${pkgver}/mkinitcpio.conf
+##sed -e '/^HOOKS/s/"$/ pymouth"/' -i ${srcdir}/${pkgname}-${pkgver}/mkinitcpio.conf
+#sed -e '/^MODULES/s/"$/ "/' -i ${srcdir}/${pkgname}-${pkgver}/mkinitcpio.conf
+sed -e '/^BINARIES/s/"$/ nano awk sed grep xargs find file"/' -i ${srcdir}/${pkgname}-${pkgver}/mkinitcpio.conf
+
+
+}

@@ -1,0 +1,81 @@
+# Build The Release
+# By Abdallah Aly 2010
+
+
+
+# show two options , use old packages or rebuild them
+testiso ()
+{
+
+
+TITLE="Testing The Release ISO"
+
+if [[ -z ${profile_name} ]]
+then
+	$DIALOG --backtitle "$BACKTITLE" --title "$TITLE" --clear --msgbox "you must select a profile" 20 70
+	return 1
+fi
+
+TITLE="Select an ISO"
+
+ISOFILESA=(${currdir}/profiles/${profile_name}/workdir/*.iso)
+
+for file in ${ISOFILESA[@]}
+do
+ISOFILES=($ISOFILES "$file" "${file/*\/}")
+done
+
+menuchoicetmp=$(mktemp)
+$DIALOG --clear --backtitle "Mesk Linux release builder" --title "$TITLE" --menu "pick your iso file: " 20 120 30 \
+${ISOFILES[@]} 2> $menuchoicetmp
+
+case $? in
+1)
+   return 1;;
+255)
+   return 255;;
+esac
+
+ISOFILE=""
+ISOFILE=$(cat $menuchoicetmp)
+
+TITLE="Select an emulator"
+
+#menuchoicetmp=$(mktemp)
+$DIALOG --clear --backtitle "Mesk Linux release builder" --title "$TITLE" --menu "pick your emulator: " 20 70 30 \
+"QEmu32" "QEmulator 32" \
+"QEmu64" "QEmulator 64" 2> $menuchoicetmp
+
+case $? in
+1)
+   return 1;;
+255)
+   return 255;;
+esac
+
+case $(cat $menuchoicetmp) in
+
+"QEmu32")
+echo "qemu-system-i386 -m 512 -cdrom $ISOFILE"
+	qemu-system-i386 -m 512M -cdrom $ISOFILE -vga std;;
+"QEmu64")
+	qemu-system-x86_64 -m 512M -cdrom $ISOFILE -vga std;;
+esac
+
+
+#loginfo "building ${profile_name} at ${workdir}"
+
+#if [[ -d ${workdir} ]]
+#then
+	#logwarning "would you like to clean ${workdir} ? please enter Y/n :"
+	#read -n1 prompt
+	
+	#if [[ $prompt == [Yy] ]]
+	#then
+	#	logwarning "cleaning ${workdir}"
+	#	rm -rf ${workdir}
+	#fi
+	
+#fi
+
+}

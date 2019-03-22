@@ -1,0 +1,16 @@
+rc_parallel="YES"
+
+LOCALE="en_US.utf8"
+HARDWARECLOCK="UTC"
+TIMEZONE="Europe/London"
+KEYMAP="uk"
+
+MODULES=(floppy)
+
+HOSTNAME="MeskLinux"
+
+USELVM="yes"
+
+eth0="dhcp"
+
+DAEMONS=(syslog-ng network dbus hal !gdm cups !crond fam sshd kdm)

@@ -1,0 +1,22 @@
+[General]
+screenCount=1
+
+[LegacySession: saved at previous logout]
+count=0
+
+[Session: saved at previous logout]
+clientId1=10111cee1e0000138035142900000018920000
+clientId2=10111cee1e0000138035144300000018920009
+count=2
+discardCommand1[$e]=rm,$HOME/.kde4/share/config/session/kwin_10111cee1e0000138035142900000018920000_1380940192_818924
+discardCommand2[$e]=rm,$HOME/.kde4/share/config/session/kmix_10111cee1e0000138035144300000018920009_1380940192_610668
+program1=kwin
+program2=/usr/bin/kmix
+restartCommand1=kwin,-session,10111cee1e0000138035142900000018920000_1380940192_818924
+restartCommand2=/usr/bin/kmix,-session,10111cee1e0000138035144300000018920009_1380940192_610668
+restartStyleHint1=0
+restartStyleHint2=0
+userId1=mesk
+userId2=mesk
+wasWm1=true
+wasWm2=false

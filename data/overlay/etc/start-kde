@@ -1,0 +1,5 @@
+#!/bin/bash
+cp -r /etc/mesk/profiles/kde/ /root/
+cp -r /etc/mesk/profiles/kde-mesk/ /home/mesk
+chown -hR mesk:users /home/mesk
+/etc/rc.d/kdm start

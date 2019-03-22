@@ -1,0 +1,5 @@
+#!/bin/bash
+mv /etc/issue /etc/issue.tmp
+linux_logo -L classic-simp > /etc/issue
+cat /etc/issue.tmp >> /etc/issue
+rm /etc/issue.tmp

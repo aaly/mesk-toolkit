@@ -1,0 +1,543 @@
+# Build Packages from AUR function for Mesk Linux ISO building bash scripts
+# By Abdallah Aly 2010, 2011, 2012
+
+pkgsdeps=()
+
+checkForCycleDeps()
+{
+	# $1 package name
+	for pkg in ${pkgsdeps[@]}
+	do
+		if [[ $pkg == $1 ]]
+		then
+			return 0
+		fi
+	done
+	pkgsdeps=(${pkgsdeps[@]} "$1")
+	return 1
+}
+
+resetCycleDeps()
+{
+	unset pkgsdeps
+}
+
+loadsources()
+{
+	if [[ ! -z $1 ]]
+	then
+		unset source
+		. PKGBUILD
+		for pkgsource in ${source[@]}
+		do
+			if echo ${pkgsource} | grep :// 2>&1>/dev/null && [[ -e "${1}/${pkgsource##*/}" ]]
+			then
+				loginfo "loading source ${pkgsource##*/} from ${1}"
+				cp "${1}/${pkgsource##*/}" .
+			fi
+		done
+	fi
+}
+
+savesources()
+{
+	#TODO also we should patch the pkgbuild with a function to copy all sources and call that function from package() (so packages need that like nvidia)
+	if [[ ! -z $1 ]]
+	then
+		unset source
+		. PKGBUILD
+		for pkgsource in ${source[@]}
+		do
+			if echo ${pkgsource} | grep :// 2>&1>/dev/null && [[ ! -e "${1}/${pkgsource##*/}" ]]
+			then 
+				
+				loginfo "saving source ${pkgsource##*/} to ${1}"
+				cp ${pkgsource##*/} ${1}
+			fi
+		done
+	fi
+}
+
+clear_cache()
+{
+# $1 the package name to check for
+# $2 directory of cache ?!
+# $3 the pcaman conf
+# $4 mesk packages dir
+
+
+if $(ls ${2}/$1*  | grep "${1}-[0-9].*.tar.xz" 2>&1>/dev/null)
+then
+
+	loginfo "found $1 in $2"	
+		
+	if $(ls ${4}| grep "^${1}$" 2>&1>/dev/null)
+	then
+		cp  ${4}/${1}/PKGBUILD PKGBUILDD
+		. PKGBUILDD
+		rm PKGBUILDD
+	else
+		pkg_repo $1	
+		logwarning "pkg repo is $pkgrepo"
+		if [[ $pkgrepo == "AUR" ]]
+		then
+			#pkgver="$(curl -silent-output http://aur.archlinux.org/packages/${1}/PKGBUILD | awk 'BEGIN{version=""} {if (match($1, "pkgver=")) {sub(/.*=/,"",$1); version=$1} else if (match($1, "pkgrel=")) {sub(/.*=/,"",$1); version=version "-" $1}} END{print version}')"
+			##wget -q http://aur.archlinux.org/packages/${1:0:2}/${1}/PKGBUILD -O PKGBUILDD
+			wget -q "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=${1}" -O PKGBUILDD
+			. PKGBUILDD
+			rm PKGBUILDD
+			#pkgver="$(curl -silent-output http://aur.archlinux.org/packages/${1}/PKGBUILD | awk 'BEGIN{version=""} {if (match($1, "pkgver=")) {sub(/.*=/,"",$1); version=$1} else if (match($1, "pkgrel=")) {sub(/.*=/,"",$1); version=version "-" $1}} END{print version}')"
+		else
+			#pkgver="$(pacman --config ${3} -Sl  | awk '{print $2 " " $3}' | grep "^${1}\ " | awk '{print $2}')"
+			#FIX PACMAN CONFIG
+			pkgver="$(pacman -Sl  | awk '{print $2 " " $3}' | grep "^${1}\ " | awk '{print $2}')"
+		fi
+	fi
+	
+	loginfo "latest $1 is $pkgver"
+	
+	for oldpkg in $(ls ${2}/$1-[0-9]*)
+	do
+		if ! echo ${oldpkg}  | grep ${pkgver} 2>&1>/dev/null
+		then
+			logwarning "removing old package ${oldpkg} from repo"
+			rm $oldpkg
+		fi
+	done
+	
+	cachepkg=""
+	#cachepkg="$(ls ${2}/$1-[0-9]*)"
+	cachepkg="$(ls ${2}/$1*  | grep "${1}-[0-9].*.tar.xz")"
+	if [[ -z $cachepkg ]]
+	then
+		# rebuild it
+		return 1
+	else
+		# already there
+		return 0
+	fi
+fi
+# rebuild it
+return 1
+}
+
+#pkg_repo ()
+#{
+##pkgrepo=$(pacman -Sl | grep "$1" | awk '{ print $1}')
+#pkgrepo=$(pacman -Sl | awk '{ print $1 " " $2}' | grep "\ ${1}\$" | awk '{ print $1}')
+#if [ -z "$pkgrepo" ]
+#then
+	#pkgrepo="AUR"
+#fi
+#}
+
+
+
+make_patch()
+{
+
+loginfo "patching ${1}"
+
+absupdated=0
+	
+# exampe: "$(pwd)/pkgs" "$(pwd)/data/patches" "filesystem"
+# $1 the directory to put packages, usually the cache dir
+# $2 the patch dir
+# $3 package to patch
+# $4 sources cache dir
+
+#PKG_BUILDDIR = the dir holding PKGBUILD
+#PKG_SRCDIR = the src dir inside the BUILDDIR
+#PKG_BUILDDIR = the dir holding PKGBUILD
+#PKG_BUILDDIR = the dir holding PKGBUILD
+
+
+#update abs
+if [[ absupdated != 1 ]]
+then
+	loginfo "updateing ABS"
+	logwarning "please enter root password:"
+	#sudo abs && absupdated=1
+fi
+
+#for patch in $(ls $2/) 
+for patch in "${1}"
+do
+	#check for patch
+	if [[ -d ${3}/${patch} ]]
+	then
+		rm -rf ${3}/${patch}
+	fi
+	
+	mkdir ${3}/${patch}
+	cd ${3}/${patch}
+	
+	#get package PKGBUILD files ...
+	pkg_repo ${patch}
+	
+	if [[ ${pkgrepo} == "AUR" ]]
+	then
+		#if ! wget https://aur.archlinux.org/packages/"${patch:0:2}"/"${patch}"/"${patch}".tar.gz 2>/dev/null
+		if ! wget https://aur.archlinux.org/cgit/aur.git/snapshot/"${patch}".tar.gz 2>/dev/null
+		
+		then
+			#logerror "Can not download https://aur.archlinux.org/packages/"${patch:0:2}"/${patch}/${patch}"
+			logerror "Can not download https://aur.archlinux.org/cgit/aur.git/snapshot/"${patch}".tar.gz"
+			return 1
+		fi
+		tar -xvf "${patch}".tar.gz --strip=1 2>/dev/null
+		rm "${patch}.tar.gz"
+	else
+		cp -r /var/abs/${pkgrepo}/${patch}/* ${3}/${patch}
+	fi
+	
+	#set variables used in patching
+	PKG_BUILDDIR="${3}/${patch}"
+	PKG_SRCDIR="${3}/${patch}/src"
+	PKG_PATCHDIR="${2}/${patch}"
+	
+	#unset the previous patch functions
+	unset -f PKG_PREBUILD
+	unset -f PKG_PREPACKAGE
+	unset -f PKG_POSTPACKAGE
+	unset -f package
+	
+	#load the new functions defined for patching
+	. ${2}/${patch}/PATCH
+	. ${PKG_BUILDDIR}/PKGBUILD
+	
+	#do pre-build patching
+	if [[ $(type -t PKG_PREBUILD) == "function" ]]
+	then
+		loginfo "running PKG_PREBUILD"
+		PKG_PREBUILD
+	fi
+	
+	if [[ $(type -t package) == "function" ]]
+	then
+		sed -e 's/package()/orig_package()/' -i ${3}/${patch}/PKGBUILD
+
+		echo "PKG_PATCHDIR=\"${2}/${patch}\"" >> ${3}/${patch}/PKGBUILD
+		#do pre-package patching
+		if [[ $(type -t PKG_PREPACKAGE) == "function" ]]
+		then
+			loginfo "adding PKG_PREPACKAGE to package()"
+			sed -n "/PKG_PREPACKAGE()/,/}$/p" ${2}/${patch}/PATCH  >> ${3}/${patch}/PKGBUILD
+			#sed -e '/package()/a \PKG_PREPACKAGE' -i ${3}/${patch}/PKGBUILD
+		fi
+	
+		
+		#do post-package patching
+		if [[ $(type -t PKG_POSTPACKAGE) == "function" ]]
+		then
+			loginfo "adding PKG_POSTPACKAGE to package()"
+			sed -n "/PKG_POSTPACKAGE()/,/}$/p" ${2}/${patch}/PATCH  >> ${3}/${patch}/PKGBUILD
+			#sed -e '/package()/a \PKG_PREPACKAGE' -i ${3}/${patch}/PKGBUILD
+		fi
+	
+		echo "package() {" >> ${3}/${patch}/PKGBUILD
+		if [[ $(type -t PKG_PREPACKAGE) == "function" ]]
+		then
+			echo "PKG_PREPACKAGE" >> ${3}/${patch}/PKGBUILD
+		fi
+		echo "orig_package" >> ${3}/${patch}/PKGBUILD
+		
+		if [[ $(type -t PKG_POSTPACKAGE) == "function" ]]
+		then
+			echo "PKG_POSTPACKAGE" >> ${3}/${patch}/PKGBUILD
+		fi
+		echo "}" >> ${3}/${patch}/PKGBUILD
+		#any other type of patch function .... ?
+	fi
+	
+	#regenrate the checksums
+	loginfo "re-generating the checksums"
+	loadsources $4
+	makepkg -g >> PKGBUILD
+done	
+
+return 0
+#copy them to the repo
+#makerepo or update
+}
+
+build_package()
+{
+# $1 package to be made
+# $2 patches dir
+# $3 build dir
+# $4 custom packages dir
+# $5 cache dir for sources
+# $6 config file for makepkg
+# $7 pacman config file
+
+
+if [[ $(checkForCycleDeps $1) == 0 ]]
+then
+	logerror "${1} already built, maybe dependecy cycle ?"
+	return 0
+fi
+
+local buildpkg=2
+local resources_loaded=0;
+clear_cache ${1} ${3} ${7} ${4}
+
+if [[ $? == 0 ]]
+then
+	loginfo "already found ${1} in cache"
+	return 0
+fi
+	
+if [[ $(ls ${2}| grep "^${1}$" 2>&1>/dev/null) ]]
+then
+	make_patch "${1}" "${2}" "${3}" "${5}"
+	if [[ $? != 0 ]] #error happened to a patch
+	then
+		return 1
+	fi
+	resources_loaded=1
+	buildpkg=1
+elif ls ${4}| grep "^${1}$" 2>&1>/dev/null
+then
+	cp -r ${4}/${1} ${3}
+	cd ${3}/${1}
+	rm *.pkg.*
+	buildpkg=1
+else
+	#if [[ $(pacman -Si "${1}" 2>&1>/dev/null) != 0 ]] && [[ $(pacman -Sgi "${1}" | grep "${1}" 2>&1>/dev/null) != 0 ]]
+	#if ! pacman --config ${7} -Si "${1}" 2>&1>/dev/null && ! pacman --config ${7} -Sgi "${1}" | grep "${1}" 2>&1>/dev/null
+    #if ! pacman  --config ${7} -Si "${1}" 2>&1>/dev/null && ! pacman --config ${7} -Sgi "${1}" | grep "${1}" 2>&1>/dev/null
+    if pacman -Si "${1}" 2>&1>/dev/null
+	then
+		buildpkg=2
+		return $buildpkg
+		
+		#no need to isntall since it is in repos already and not a makedependecy !
+		if ! pacman -Qi "${1}" 2>&1>/dev/null
+		then
+			logwarning "please enter root password to install :"
+			sudo pacman -S --noconfirm "${1}"
+		fi
+		return 0
+	elif pacman -Sg "${1}" | grep "${1}" 2>&1>/dev/null
+	then
+		loginfo "Package is a group"
+		buildpkg=2
+		return $buildpkg
+	else
+		loginfo "getting ${1} from AUR"
+		cd ${3}
+		echo ${3}
+		#if ! wget https://aur.archlinux.org/packages/"${1:0:2}"/"${1}"/"${1}".tar.gz 2>/dev/null
+		if ! wget https://aur.archlinux.org/cgit/aur.git/snapshot/"${1}".tar.gz 2>/dev/null
+
+		then
+			#logerror "Can not download https://aur.archlinux.org/packages/"${1:0:2}"/${1}/${1}"
+			logerror "Can not download https://aur.archlinux.org/cgit/aur.git/snapshot/"${1}".tar.gz"
+			return 1
+		fi
+		tar -xvf "${1}".tar.gz 2>/dev/null
+		rm "${1}.tar.gz"
+		cd "${1}"
+		buildpkg=1
+	fi
+fi
+
+
+#if [[ $(pacman -Si "${1}" 2>&1>/dev/null) != 0 ]] && [[ $(pacman -Sgi "${1}" | grep "${1}" 2>&1>/dev/null) != 0 ]] || [[ ${buildpkg} == 1 ]]
+if [[ ${buildpkg} == 1 ]]
+then
+	
+	logwarning "building depedencies for ${1}"
+	unset depends	
+	unset makedepends
+	. PKGBUILD
+
+	for dependency in ${depends[@]}
+	do
+		if [[ ! -z ${dependency} ]]
+		then
+			dependency=${dependency%>*}
+			dependency=${dependency%<*}
+			dependency=${dependency%=*}
+			loginfo "building dependency ${dependency}"
+			
+
+			build_package ${dependency} ${2} ${3} ${4} ${5} ${6} ${7}
+			cd ${3}/${1}
+		fi
+	done
+			
+	for makedependency in ${makedepends[@]}
+	do
+		if [[ ! -z ${makedependency} ]]
+		then
+			makedependency=${makedependency%>*}
+			makedependency=${makedependency%<*}
+			makedependency=${makedependency%=*}
+			loginfo "building makedepedency ${makedependency}"
+			##if in official repo
+			#3if not installed install
+			pkg_repo ${makedependency}
+			if [[ ${pkgrepo} != "AUR" ]]
+			then
+				#if pacman -Si ${makedependency} 2>&1>/dev/null &&  ! pacman -Qi ${makedependency} 2>&1>/dev/null
+				if ! pacman -Qi ${makedependency} 2>&1>/dev/null
+				then
+					logwarning "please enter root password to install :"
+					#sudo pacman --config ${7} -S --noconfirm ${makedependency}
+					sudo pacman -S --noconfirm ${makedependency}
+					#sudo pacman -S --force --noconfirm ${makedependency}
+				fi
+			else
+				build_package ${makedependency} ${2} ${3} ${4} ${5} ${6} ${7}
+				if [[ $? != 0 ]]
+				then
+					logerror "couldn't build makedepedency ${makedependency}"
+					return 1
+				fi
+				logwarning "please enter root password to install :"
+				#sudo pacman --config ${7} -Uf --noconfirm ${3}/${makedependency}-[0-9]*
+				sudo pacman -Uf --noconfirm ${3}/${makedependency}-[0-9]*
+				cd ${3}/${1}
+			fi
+		fi
+	done
+	
+	if [[ $resources_loaded == 0 ]] # this case, we didn't load it in a patch
+	then
+		loadsources $5
+	fi
+	
+fi
+
+if [[ ${buildpkg} == 1 ]]
+then
+	loginfo "Getting sources !!!"
+	#if makepkg --config "${6}" -f -d --noconfirm --nobuild
+	if makepkg -f -d --noconfirm --nobuild
+	then
+		savesources $5
+		rm -rf src pkg
+		makepkg --config "${6}" -f -d --noconfirm
+		#makepkg  -f -d --noconfirm
+		buildpkg=$?
+	else
+		logerror "failed to get sources !!!"
+		buildpkg=1
+	fi
+		
+	if [[ $buildpkg == 0 ]]
+	then
+		cp *.pkg.* ${3}
+	else
+		buildpkg=1
+	fi
+	cd ${3}
+	rm -rf ${1}
+fi
+
+
+return ${buildpkg}
+}
+
+
+make_repo()
+{
+
+# $1 architecture x86_64 or i686
+
+# $1 file with list of packages to build
+# $2 patches dir
+# $3 directory to put packages and repo
+# $4 custom repo packages dirs < abs style >
+# $5 sources cache directory to put sources
+# $6 architecture x64 or i686
+
+
+cp ${currdir}/data/config/pacman.conf ${pacmantmpconf}
+
+sed -e "s@ARCH@${1}@" -i ${pacmantmpconf}
+sed -e "s@BASE@${currdir}@" -i ${pacmantmpconf}
+
+
+#sudo pacman -Sy --config ${pacmantmpconf}
+meskrepodir="${currdir}/data/meskrepo/${1}"
+patchesdir="${currdir}/data/patches"
+makepkgconf="${currdir}/data/config/makepkg-${1}.conf"
+pkgsourcecache="${currdir}/pkgsourcecache/$1"
+customrepopkgs="${currdir}/data/packages"
+
+
+
+buildgrp="*"
+
+#if [[ ! -z "${1}" ]]
+#then
+	#buildgrp="${1}"
+#fi
+
+if [[ ! -d ${meskrepodir} ]]
+then
+	logwarning "repo dir ${meskrepodir} does not exist"
+	logwarning "creating ${meskrepodir}"
+	mkdir ${meskrepodir}
+fi
+
+if [[ ! -d ${pkgsourcecache} ]]
+then
+	logwarning "sources cache dir ${pkgsourcecache} does not exist"
+	logwarning "creating ${pkgsourcecache}"
+	mkdir -p ${pkgsourcecache}
+fi
+
+
+
+
+#repo-add "${meskrepodir}/mesk.db.tar.gz" "${meskrepodir}"/*.xz
+
+pkg_repo "null" "reset"
+pkg_repo "null" "official"
+##for grp in $(ls ${currdir}/data/pkggroups/${buildgrp} | sed s/^.*\\/\//)
+##do
+	#if echo $grp | grep ".ignore"
+	#then
+	#	continue
+	#fi
+	
+	#echo group $grp
+	grp="system"
+	while read pkg
+	do
+		pkg="mesk-installer"
+		if ! echo ${pkg} | grep '#' && [[ ! -z ${pkg} ]] 2>&1>/dev/null
+		then
+			loginfo "building $pkg"
+			build_package "${pkg}" "${patchesdir}" "${meskrepodir}" "${customrepopkgs}" "${pkgsourcecache}" "${makepkgconf}" "${pacmantmpconf}"
+			retval=$?
+			
+
+			if [[ ${retval} == 2 ]]
+			then
+				logwarning "official package $grp/$pkg"
+				echo "official package $grp/$pkg" >> ${currdir}/pkgerrors
+			elif [[ ${retval} == 3 ]]
+			then
+				echo "not a patch not in AUR $grp/$pkg" >> ${currdir}/pkgerrors
+			elif [[ ${retval} != 0 ]]
+			then
+				logerror "cant build $grp/$pkg with error ${retval}"
+				echo "cant build $grp/$pkg" >> ${currdir}/pkgerrors
+				##exit 1
+			fi
+			resetCycleDeps
+		fi
+		break
+	done <${currdir}/data/pkggroups/${grp}
+	#break
+##done
+
+repo-add ${meskrepodir}/mesk.db.tar.gz ${meskrepodir}/*pkg*
+
+exit 1
+}

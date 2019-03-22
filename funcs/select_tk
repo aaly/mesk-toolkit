@@ -1,0 +1,45 @@
+# Build The Release
+# By Abdallah Aly 2010
+
+
+toolkitsDir="data/toolkits"
+
+select_tk ()
+{
+
+TITLE="Updating Toolkits"
+
+$DIALOG --backtitle "Mesk Linux Release Builder" --title "$TITLE" --menu "Select a toolkit to use:" 20 70 20 \
+"Larch5.3" "update larch toolkit" \
+"Larch7.1" "update larch toolkit" \
+"Archiso-live" "update archiso-live toolkit" 2> /tmp/menuchoice.utks
+
+case $? in
+1)
+   return 1;;
+255)
+   return 255;;
+esac
+
+
+case $(cat /tmp/menuchoice.utks) in
+"Larch7.1")
+currDir=$(pwd)
+cd $toolkitsDir
+mkdir "larch7" 2>&1> /dev/null
+cd larch7
+
+cd $currDir;;
+
+"Larch5.3")
+;;
+
+
+"Archiso-live")
+;;
+
+esac
+
+rm /tmp/menuchoice.utks
+
+}

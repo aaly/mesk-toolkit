@@ -1,0 +1,7 @@
+[Desktop Entry]
+Icon=graphics-viewer-document
+Type=Application
+Exec=firefox file:///root/Desktop/.docs/install.html
+Name=How to install
+Name[en]=How to install
+Name[ar]=كيفية التنصيب

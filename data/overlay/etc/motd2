@@ -1,0 +1,11 @@
+echo -e '\E[32m>>> \E[37mWelcome to \E[33mMesk\E[37mLinux !'
+#error "Welcome to MeskLinux !"
+# echo -e '\E[30m black \E[31mred \E[32mgreen \E[33myellow \E[34mblue \E[35mmagenta \E[36mcyan \E[37mwhite'
+echo    "-------------------------"
+echo    "| username  |  password |"
+echo    "|-----------|-----------|"
+echo -e '| \E[31mroot\E[37m      |  \E[31mmeskroot\E[37m |'
+echo    "|           |           |"
+echo -e '|\E[33m mesk\E[37m      | \E[33m mesk\E[37m     |'
+echo    "-------------------------"
+

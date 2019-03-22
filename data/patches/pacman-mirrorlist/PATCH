@@ -1,0 +1,12 @@
+PKG_PREBUILD()
+{
+#cp ${PKG_PATCHDIR}/mirrorlist ${PKG_BUILDDIR}
+sed '/States/,/##/s/#S/S/' -i ${PKG_BUILDDIR}/mirrorlist 
+sed '/France/,/##/s/#S/S/' -i ${PKG_BUILDDIR}/mirrorlist
+sed '/Germany/,/##/s/#S/S/' -i ${PKG_BUILDDIR}/mirrorlist
+sed '/Sweden/,/##/s/#S/S/' -i ${PKG_BUILDDIR}/mirrorlist
+sed '/Kingdom/,/##/s/#S/S/' -i ${PKG_BUILDDIR}/mirrorlist
+
+cat  ${PKG_BUILDDIR}/mirrorlist
+
+}

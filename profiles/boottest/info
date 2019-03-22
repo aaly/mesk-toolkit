@@ -1,0 +1,23 @@
+profile_name="boottest"
+profile_desc="boottest profile"
+profile_arch="x86_64"
+workdir=""
+license=""
+cd_label=""
+iso_name=""
+author="AbdAllah Aly"
+pkgcache=""
+pkglist="linux
+systemd-sysvcompat
+linux-headers
+systemd
+grub
+sudo
+linux
+linux_logo
+pacman
+base"
+pkgsgrps="editors
+kernel
+system
+udevil"
